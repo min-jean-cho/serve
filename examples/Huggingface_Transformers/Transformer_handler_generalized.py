@@ -13,9 +13,20 @@ from transformers import (
 )
 from ts.torch_handler.base_handler import BaseHandler
 from captum.attr import LayerIntegratedGradients
-
+import time
 logger = logging.getLogger(__name__)
-logger.info("Transformers version %s",transformers.__version__)
+logger.info("Transformers version %s", transformers.__version__)
+
+ipex_enabled = False
+try:
+    import intel_extension_for_pytorch as ipex
+    ipex_enabled = True
+except:
+    pass
+
+print("=============================ipex_enabled: ===================================", ipex_enabled)
+
+
 class TransformersSeqClassifierHandler(BaseHandler, ABC):
     """
     Transformers handler class for sequence, token classification and question answering.
@@ -54,26 +65,30 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
 
         # Loading the shared object of compiled Faster Transformer Library if Faster Transformer is set
         if self.setup_config["FasterTransformer"]:
-            faster_transformer_complied_path = os.path.join(model_dir, "libpyt_fastertransformer.so")
+            faster_transformer_complied_path = os.path.join(
+                model_dir, "libpyt_fastertransformer.so")
             torch.classes.load_library(faster_transformer_complied_path)
 
         # Loading the model and tokenizer from checkpoint and config files based on the user's choice of mode
         # further setup config can be added.
         if self.setup_config["save_mode"] == "torchscript":
-            self.model = torch.jit.load(model_pt_path, map_location=self.device)
+            self.model = torch.jit.load(
+                model_pt_path, map_location=self.device)
         elif self.setup_config["save_mode"] == "pretrained":
             if self.setup_config["mode"] == "sequence_classification":
                 self.model = AutoModelForSequenceClassification.from_pretrained(
                     model_dir
                 )
             elif self.setup_config["mode"] == "question_answering":
-                self.model = AutoModelForQuestionAnswering.from_pretrained(model_dir)
+                self.model = AutoModelForQuestionAnswering.from_pretrained(
+                    model_dir)
             elif self.setup_config["mode"] == "token_classification":
-                self.model = AutoModelForTokenClassification.from_pretrained(model_dir)
+                self.model = AutoModelForTokenClassification.from_pretrained(
+                    model_dir)
             else:
                 logger.warning("Missing the operation mode.")
             self.model.to(self.device)
-            
+
         else:
             logger.warning("Missing the checkpoint or state_dict.")
 
@@ -88,7 +103,28 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
             )
 
         self.model.eval()
+        """
+        dummy_input = torch.zeros(1, 384)
+        jit_inputs = (dummy_input.long(), dummy_input)
 
+        if ipex_enabled:  # ipex_fp32_jit
+            logger.warning(
+                "============================ ipex fp32 jit ==================================")
+            self.model = self.model.to(memory_format=torch.channels_last)
+            self.model = ipex.optimize(
+                self.model, dtype=torch.float32, level="O1", auto_kernel_selection=True)
+            with torch.no_grad():
+                self.model = torch.jit.trace(
+                    self.model, jit_inputs, strict=False)
+            self.model = torch.jit.freeze(self.model)
+        else:  # pytorch_fp32_jit
+            logger.warning(
+                "=============================== pytorch fp32 jit ================================")
+            with torch.no_grad():
+                self.model = torch.jit.trace(
+                    self.model, jit_inputs, strict=False)
+            self.model = torch.jit.freeze(self.model)
+	"""
         logger.info(
             "Transformer model from path %s loaded successfully", model_dir
         )
@@ -127,7 +163,8 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
             logger.info("Received text: '%s'", input_text)
             # preprocessing text for sequence_classification and token_classification.
             if self.setup_config["mode"] == "sequence_classification" or self.setup_config["mode"] == "token_classification":
-                inputs = self.tokenizer.encode_plus(input_text, max_length=int(max_length), pad_to_max_length=True, add_special_tokens=True, return_tensors='pt')
+                inputs = self.tokenizer.encode_plus(input_text, max_length=int(
+                    max_length), pad_to_max_length=True, add_special_tokens=True, return_tensors='pt')
             # preprocessing text for question_answering.
             elif self.setup_config["mode"] == "question_answering":
                 # TODO Reading the context from a pickeled file or other fromats that
@@ -142,7 +179,8 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
                 question_context = ast.literal_eval(input_text)
                 question = question_context["question"]
                 context = question_context["context"]
-                inputs = self.tokenizer.encode_plus(question, context, max_length=int(max_length), pad_to_max_length=True, add_special_tokens=True, return_tensors="pt")
+                inputs = self.tokenizer.encode_plus(question, context, max_length=int(
+                    max_length), pad_to_max_length=True, add_special_tokens=True, return_tensors="pt")
             input_ids = inputs["input_ids"].to(self.device)
             attention_mask = inputs["attention_mask"].to(self.device)
             # making a batch out of the recieved requests
@@ -152,8 +190,14 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
                     input_ids_batch = input_ids
                     attention_mask_batch = attention_mask
                 else:
-                    input_ids_batch = torch.cat((input_ids_batch, input_ids), 0)
-                    attention_mask_batch = torch.cat((attention_mask_batch, attention_mask), 0)
+                    input_ids_batch = torch.cat(
+                        (input_ids_batch, input_ids), 0)
+                    attention_mask_batch = torch.cat(
+                        (attention_mask_batch, attention_mask), 0)
+
+        ############################# batch size ##########################################
+        input_ids_batch = torch.ones(64, 384).long()
+        attention_mask_batch = torch.randn(64, 384)
         return (input_ids_batch, attention_mask_batch)
 
     def inference(self, input_batch):
@@ -167,56 +211,83 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
         input_ids_batch, attention_mask_batch = input_batch
         inferences = []
         # Handling inference for sequence_classification.
-        if self.setup_config["mode"] == "sequence_classification":
-            predictions = self.model(input_ids_batch, attention_mask_batch)
-            print("This the output size from the Seq classification model", predictions[0].size())
-            print("This the output from the Seq classification model", predictions)
 
-            num_rows, num_cols = predictions[0].shape
-            for i in range(num_rows):
-                out = predictions[0][i].unsqueeze(0)
-                y_hat = out.argmax(1).item()
-                predicted_idx = str(y_hat)
-                inferences.append(self.mapping[predicted_idx])
+        print("============================== input ids batch ===============================",
+              input_ids_batch.size())
+        print("============================== attention mask batch ============================================",
+              attention_mask_batch.size())
+
+        if self.setup_config["mode"] == "sequence_classification":
+	    n_iter = 10
+            total_time = 0
+            for i in range(n_iter):
+                start_time = time.time()
+                predictions = self.model(input_ids_batch, attention_mask_batch)
+                end_time = time.time()
+                total_time += end_time - start_time
+            print(
+                "========================== avg inference time===========================", total_time/n_iter)
+
+            #print("This the output size from the Seq classification model", predictions[0].size())
+            #print("This the output from the Seq classification model", predictions)
+
+            #num_rows, num_cols = predictions[0].shape
+            # for i in range(num_rows):
+            #    out = predictions[0][i].unsqueeze(0)
+            #    y_hat = out.argmax(1).item()
+            #    predicted_idx = str(y_hat)
+            #    inferences.append(self.mapping[predicted_idx])
+            # inferences.append(0)
+            inferences = [0]
         # Handling inference for question_answering.
         elif self.setup_config["mode"] == "question_answering":
             # the output should be only answer_start and answer_end
             # we are outputing the words just for demonstration.
-            if self.setup_config["save_mode"]=="pretrained":
-                outputs = self.model(input_ids_batch,attention_mask_batch)
+            if self.setup_config["save_mode"] == "pretrained":
+                outputs = self.model(input_ids_batch, attention_mask_batch)
                 answer_start_scores = outputs.start_logits
                 answer_end_scores = outputs.end_logits
             else:
-                answer_start_scores, answer_end_scores = self.model(input_ids_batch, attention_mask_batch)
-            print("This the output size for answer start scores from the question answering model", answer_start_scores.size())
-            print("This the output for answer start scores from the question answering model", answer_start_scores)
-            print("This the output size for answer end scores from the question answering model", answer_end_scores.size())
-            print("This the output for answer end scores from the question answering model", answer_end_scores)
+                answer_start_scores, answer_end_scores = self.model(
+                    input_ids_batch, attention_mask_batch)
+            print("This the output size for answer start scores from the question answering model",
+                  answer_start_scores.size())
+            print("This the output for answer start scores from the question answering model",
+                  answer_start_scores)
+            print("This the output size for answer end scores from the question answering model",
+                  answer_end_scores.size())
+            print(
+                "This the output for answer end scores from the question answering model", answer_end_scores)
 
             num_rows, num_cols = answer_start_scores.shape
             # inferences = []
             for i in range(num_rows):
-                answer_start_scores_one_seq = answer_start_scores[i].unsqueeze(0)
+                answer_start_scores_one_seq = answer_start_scores[i].unsqueeze(
+                    0)
                 answer_start = torch.argmax(answer_start_scores_one_seq)
                 answer_end_scores_one_seq = answer_end_scores[i].unsqueeze(0)
                 answer_end = torch.argmax(answer_end_scores_one_seq) + 1
-                prediction = self.tokenizer.convert_tokens_to_string(self.tokenizer.convert_ids_to_tokens(input_ids_batch[i].tolist()[answer_start:answer_end]))
+                prediction = self.tokenizer.convert_tokens_to_string(
+                    self.tokenizer.convert_ids_to_tokens(input_ids_batch[i].tolist()[answer_start:answer_end]))
                 inferences.append(prediction)
             logger.info("Model predicted: '%s'", prediction)
         # Handling inference for token_classification.
-        elif self.setup_config["mode"]== "token_classification":
+        elif self.setup_config["mode"] == "token_classification":
             outputs = self.model(input_ids_batch, attention_mask_batch)[0]
-            print("This the output size from the token classification model", outputs.size())
-            print("This the output from the token classification model",outputs)
+            print(
+                "This the output size from the token classification model", outputs.size())
+            print("This the output from the token classification model", outputs)
             num_rows = outputs.shape[0]
             for i in range(num_rows):
                 output = outputs[i].unsqueeze(0)
                 predictions = torch.argmax(output, dim=2)
-                tokens = self.tokenizer.tokenize(self.tokenizer.decode(input_ids_batch[i]))
+                tokens = self.tokenizer.tokenize(
+                    self.tokenizer.decode(input_ids_batch[i]))
                 if self.mapping:
                     label_list = self.mapping["label_list"]
                 label_list = label_list.strip('][').split(', ')
-                prediction = [(token, label_list[prediction]) for token, prediction in zip(tokens, predictions[0].tolist())]
+                prediction = [(token, label_list[prediction])
+                              for token, prediction in zip(tokens, predictions[0].tolist())]
                 inferences.append(prediction)
             logger.info("Model predicted: '%s'", prediction)
 
@@ -241,32 +312,34 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
         Returns:
             (list): Returns a list of importances and words.
         """
-        
+
         if self.setup_config["captum_explanation"]:
-            embedding_layer = getattr(self.model,self.setup_config["embedding_name"])
+            embedding_layer = getattr(
+                self.model, self.setup_config["embedding_name"])
             embeddings = embedding_layer.embeddings
             self.lig = LayerIntegratedGradients(
                 captum_sequence_forward, embeddings
             )
         else:
-            logger.warning("Captum Explanation is not chosen and will not be available")
-        
+            logger.warning(
+                "Captum Explanation is not chosen and will not be available")
+
         if isinstance(text, (bytes, bytearray)):
             text = text.decode('utf-8')
         text_target = ast.literal_eval(text)
-        
-        if not self.setup_config["mode"]=="question_answering":
+
+        if not self.setup_config["mode"] == "question_answering":
             text = text_target["text"]
         self.target = text_target["target"]
-        
+
         input_ids, ref_input_ids, attention_mask = construct_input_ref(
-            text, self.tokenizer, self.device,self.setup_config["mode"] 
+            text, self.tokenizer, self.device, self.setup_config["mode"]
         )
         all_tokens = get_word_token(input_ids, self.tokenizer)
         response = {}
         response["words"] = all_tokens
         if self.setup_config["mode"] == "sequence_classification" or self.setup_config["mode"] == "token_classification":
-            
+
             attributions, delta = self.lig.attribute(
                 inputs=input_ids,
                 baselines=ref_input_ids,
@@ -278,13 +351,13 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
             attributions_sum = summarize_attributions(attributions)
             response["importances"] = attributions_sum.tolist()
             response["delta"] = delta[0].tolist()
-        
+
         elif self.setup_config["mode"] == "question_answering":
             attributions_start, delta_start = self.lig.attribute(
                 inputs=input_ids,
                 baselines=ref_input_ids,
                 target=self.target,
-                additional_forward_args=( attention_mask, 0, self.model),
+                additional_forward_args=(attention_mask, 0, self.model),
                 return_convergence_delta=True,
             )
             attributions_end, delta_end = self.lig.attribute(
@@ -300,9 +373,7 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
             response["importances_answer_end"] = attributions_sum_end.tolist()
             response["delta_start"] = delta_start[0].tolist()
             response["delta_end"] = delta_end[0].tolist()
-            
-            
-        
+
         return [response]
 
 
@@ -323,8 +394,9 @@ def construct_input_ref(text, tokenizer, device, mode):
         question_context = ast.literal_eval(text)
         question = question_context["question"]
         context = question_context["context"]
-        text_ids = tokenizer.encode(question,context, add_special_tokens=False)
-       
+        text_ids = tokenizer.encode(
+            question, context, add_special_tokens=False)
+
     text_ids = tokenizer.encode(text, add_special_tokens=False)
     # construct input token ids
     logger.info("text_ids %s", text_ids)

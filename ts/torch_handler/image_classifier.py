@@ -8,6 +8,7 @@ from torchvision import transforms
 from .vision_handler import VisionHandler
 from ..utils.util  import map_class_to_label
 
+print("====================== image classifier ==================")
 
 class ImageClassifier(VisionHandler):
     """

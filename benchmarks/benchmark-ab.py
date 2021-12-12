@@ -67,10 +67,16 @@ def json_provider(file_path, cmd_name):
 @click.option('--inference_model_url', '-imu', default='predictions/benchmark',
               help='Inference function url - can be either for predictions or explanations. Default predictions/benchmark')
 
+
+@click.option('--report_dir')
+@click.option('--report_file_name')
+
+
+
 @click_config_file.configuration_option(provider=json_provider, implicit=False,
                                         help="Read configuration from a JSON file")
 def benchmark(test_plan, url, gpus, exec_env, concurrency, requests, batch_size, batch_delay, input, workers,
-              content_type, image, docker_runtime, backend_profiling, config_properties, inference_model_url):
+              content_type, image, docker_runtime, backend_profiling, config_properties, inference_model_url, report_dir, report_file_name):
     input_params = {'url': url,
                     'gpus': gpus,
                     'exec_env': exec_env,
@@ -106,7 +112,7 @@ def benchmark(test_plan, url, gpus, exec_env, concurrency, requests, batch_size,
     check_torchserve_health()
     warm_up()
     run_benchmark()
-    generate_report()
+    generate_report(report_dir, report_file_name)
 
 
 def check_torchserve_health():
@@ -128,7 +134,7 @@ def warm_up():
     register_model()
 
     click.secho("\n\nExecuting warm-up ...", fg='green')
-    ab_cmd = f"ab -c {execution_params['concurrency']}  -n {execution_params['requests']/10} -k -p {TMP_DIR}/benchmark/input -T " \
+    ab_cmd = f"ab -s 1000000000 -c {execution_params['concurrency']}  -n {execution_params['requests']/10} -k -p {TMP_DIR}/benchmark/input -T " \
              f"{execution_params['content_type']} {execution_params['inference_url']}/{execution_params['inference_model_url']} > {result_file}"
     
     execute(ab_cmd, wait=True)
@@ -136,7 +142,7 @@ def warm_up():
 
 def run_benchmark():
     click.secho("\n\nExecuting inference perfromance tests ...", fg='green')
-    ab_cmd = f"ab -c {execution_params['concurrency']}  -n {execution_params['requests']} -k -p {TMP_DIR}/benchmark/input -T " \
+    ab_cmd = f"ab -s 1000000000 -c {execution_params['concurrency']}  -n {execution_params['requests']} -k -p {TMP_DIR}/benchmark/input -T " \
              f"{execution_params['content_type']} {execution_params['inference_url']}/{execution_params['inference_model_url']} > {result_file}"
     
     execute(ab_cmd, wait=True)
@@ -267,12 +273,14 @@ def update_exec_params(input_param):
         if default_ab_params[k] != input_param[k]:
             execution_params[k] = input_param[k]
     getAPIS()
+    execution_params['inference_url'] = "http://127.0.0.1:8080"
+    execution_params['management_url'] = "http://127.0.0.1:8081"
 
             
-def generate_report():
+def generate_report(report_dir, report_file_name):
     click.secho("\n\nGenerating Reports...", fg='green')
     extract_metrics()
-    generate_csv_output()
+    generate_csv_output(report_dir, report_file_name)
     generate_latency_graph()
     generate_profile_graph()
     click.secho("\nTest suite execution complete.", fg='green')
@@ -302,7 +310,7 @@ def extract_metrics():
             outf.writelines(all_lines)
 
 
-def generate_csv_output():
+def generate_csv_output(report_dir, report_file_name):
     click.secho("*Generating CSV output...", fg='green')
     batched_requests = execution_params['requests'] / execution_params['batch_size']
     line50 = int(batched_requests / 2)
