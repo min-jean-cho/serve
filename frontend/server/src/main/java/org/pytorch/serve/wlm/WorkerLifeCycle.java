@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -30,10 +31,17 @@ public class WorkerLifeCycle {
     private ReaderThread errReader;
     private ReaderThread outReader;
     private String launcherArgs;
+    private int currNumWorker;
+    private int numWorker;
+    private static ModelManager modelManager = ModelManager.getInstance();
+    private static List<WorkerThread> workers;
 
     public WorkerLifeCycle(ConfigManager configManager, Model model) {
         this.configManager = configManager;
         this.model = model;
+        this.workers = modelManager.getWorkers(model.getModelVersionName());
+        currNumWorker = workers.size();
+        numWorker = model.getMinWorkers();
     }
 
     public Process getProcess() {
@@ -99,6 +107,15 @@ public class WorkerLifeCycle {
             if (launcherAvailable) {
                 ArrayList<String> args = launcherArgsToList();
                 argl.addAll(args);
+
+                // multi workers core pinning
+                if (numWorker > 1) {
+                    argl.add("--num_worker");
+                    argl.add(String.valueOf(numWorker));
+                    argl.add("--worker_idx");
+                    argl.add(String.valueOf(currNumWorker));
+                }
+
             } else {
                 logger.warn(
                         "CPU launcher is enabled but launcher is not available. Proceeding without launcher.");
