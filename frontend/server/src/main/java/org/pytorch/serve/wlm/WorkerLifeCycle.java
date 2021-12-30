@@ -32,16 +32,19 @@ public class WorkerLifeCycle {
     private ReaderThread outReader;
     private String launcherArgs;
     private int currNumWorker;
+    public int currNumRunningWorkers;
     private int numWorker;
     private static ModelManager modelManager = ModelManager.getInstance();
-    private static List<WorkerThread> workers;
+    private List<WorkerThread> workers;
 
     public WorkerLifeCycle(ConfigManager configManager, Model model) {
         this.configManager = configManager;
         this.model = model;
         this.workers = modelManager.getWorkers(model.getModelVersionName());
-        currNumWorker = workers.size();
-        numWorker = model.getMinWorkers();
+        
+        this.currNumWorker = workers.size();
+        this.numWorker = model.getMinWorkers();
+        this.currNumRunningWorkers = modelManager.getNumRunningWorkers(model.getModelVersionName());
     }
 
     public Process getProcess() {
@@ -52,8 +55,6 @@ public class WorkerLifeCycle {
         ArrayList<String> arrlist = new ArrayList<String>();
         arrlist.add("-m");
         arrlist.add("intel_extension_for_pytorch.cpu.launch");
-        arrlist.add("--ninstance");
-        arrlist.add("1");
         if (launcherArgs != null && launcherArgs.length() > 1) {
             String[] argarray = launcherArgs.split(" ");
             for (int i = 0; i < argarray.length; i++) {
@@ -78,7 +79,9 @@ public class WorkerLifeCycle {
 
             String[] cmd_ = new String[cmd.size()];
             cmd_ = cmd.toArray(cmd_);
-
+            
+            logger.info(java.util.Arrays.toString(cmd_));
+            
             Process process = Runtime.getRuntime().exec(cmd_);
             int ret = process.waitFor();
             launcherAvailable = (ret == 0);
@@ -87,11 +90,12 @@ public class WorkerLifeCycle {
         }
         return launcherAvailable;
     }
-
-    public void startWorker(int port) throws WorkerInitializationException, InterruptedException {
+    
+    public void startWorker(int port) throws WorkerInitializationException, InterruptedException {    
         File workingDir = new File(configManager.getModelServerHome());
         File modelPath;
         setPort(port);
+        
         try {
             modelPath = model.getModelDir().getCanonicalFile();
         } catch (IOException e) {
@@ -100,6 +104,7 @@ public class WorkerLifeCycle {
 
         ArrayList<String> argl = new ArrayList<String>();
         argl.add(EnvironmentUtils.getPythonRunTime(model));
+        
 
         if (configManager.isCPULauncherEnabled()) {
             launcherArgs = configManager.getCPULauncherArgs();
@@ -110,10 +115,11 @@ public class WorkerLifeCycle {
 
                 // multi workers core pinning
                 if (numWorker > 1) {
-                    argl.add("--num_worker");
-                    argl.add(String.valueOf(numWorker));
-                    argl.add("--worker_idx");
-                    argl.add(String.valueOf(currNumWorker));
+                    argl.add("--ninstances");
+                    argl.add(String.valueOf(this.numWorker));
+                    argl.add("--instance_idx");
+                    // instance_idx is 0-indexed 
+                    argl.add(String.valueOf(this.currNumRunningWorkers));
                 }
 
             } else {
@@ -150,7 +156,7 @@ public class WorkerLifeCycle {
                 errReader.start();
                 outReader.start();
             }
-
+                        
             if (latch.await(2, TimeUnit.MINUTES)) {
                 if (!success) {
                     throw new WorkerInitializationException("Backend stream closed.");

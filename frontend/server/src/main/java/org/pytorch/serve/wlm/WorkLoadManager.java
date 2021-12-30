@@ -84,15 +84,38 @@ public class WorkLoadManager {
 
         return numWorking;
     }
-
+    
+    public boolean isRestartWorkers(int currentWorkers){
+        boolean isRestart;
+        if (configManager.isCPULauncherEnabled() && currentWorkers != 0){
+            isRestart = true;
+        } else {
+            isRestart = false;
+        }
+        return isRestart;
+    }
+    
+    public CompletableFuture<Integer> restartWorkers(List<WorkerThread> threads, Model model, int currentWorkers, int restartMinWorker, CompletableFuture<Integer> future) {
+        logger.warn("removing {} threads prior to restarting {} threads", currentWorkers, restartMinWorker);
+        future = removeThreads(threads, model, currentWorkers, 0, future);
+        
+        logger.warn("restarting {} threads", restartMinWorker);
+        addThreads(threads, model, restartMinWorker, future);
+        
+        return future;
+    }
+    
     public CompletableFuture<Integer> modelChanged(
             Model model, boolean isStartup, boolean isCleanUp) {
         synchronized (model.getModelVersionName()) {
             boolean isSnapshotSaved = false;
             CompletableFuture<Integer> future = new CompletableFuture<>();
             int minWorker = model.getMinWorkers();
+            int restartMinWorker = minWorker;
             int maxWorker = model.getMaxWorkers();
-            List<WorkerThread> threads;
+              
+            List<WorkerThread> threads;    
+            
             if (minWorker == 0) {
                 threads = workers.remove(model.getModelVersionName());
                 if (threads == null) {
@@ -109,47 +132,18 @@ public class WorkLoadManager {
             }
 
             int currentWorkers = threads.size();
-            if (currentWorkers < minWorker) {
-                addThreads(threads, model, minWorker - currentWorkers, future);
+            boolean isRestart = isRestartWorkers(currentWorkers);
+
+            if (!isRestart){
+                if (currentWorkers < minWorker) {
+                    addThreads(threads, model, minWorker - currentWorkers, future);
+                } else {
+                    future = removeThreads(threads, model, currentWorkers, maxWorker, future);   
+                }
             } else {
-                for (int i = currentWorkers - 1; i >= maxWorker; --i) {
-                    WorkerThread thread = threads.remove(i);
-                    WorkerLifeCycle lifecycle = thread.getLifeCycle();
-                    thread.shutdown();
-
-                    Process workerProcess = lifecycle.getProcess();
-
-                    // Need to check worker process here since thread.shutdown() -> lifecycle.exit()
-                    // -> This may nullify process object per destroyForcibly doc.
-                    if (workerProcess != null && workerProcess.isAlive()) {
-                        boolean workerDestroyed = false;
-                        try {
-                            String cmd = String.format(OSUtils.getKillCmd(), workerProcess.pid());
-                            Process workerKillProcess = Runtime.getRuntime().exec(cmd, null, null);
-                            workerDestroyed =
-                                    workerKillProcess.waitFor(
-                                            configManager.getUnregisterModelTimeout(),
-                                            TimeUnit.SECONDS);
-                        } catch (InterruptedException | IOException e) {
-                            logger.warn(
-                                    "WorkerThread interrupted during waitFor, possible async resource cleanup.");
-                            future.complete(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                            return future;
-                        }
-                        if (!workerDestroyed) {
-                            logger.warn(
-                                    "WorkerThread timed out while cleaning, please resend request.");
-                            future.complete(HttpURLConnection.HTTP_CLIENT_TIMEOUT);
-                            return future;
-                        }
-                    }
-                }
-                if (!isStartup && !isCleanUp && !model.isWorkflowModel()) {
-                    SnapshotManager.getInstance().saveSnapshot();
-                    isSnapshotSaved = true;
-                }
-                future.complete(HttpURLConnection.HTTP_OK);
+                future = restartWorkers(threads, model, currentWorkers, minWorker, future);
             }
+            
             if (!isStartup && !isSnapshotSaved && !isCleanUp && !model.isWorkflowModel()) {
                 SnapshotManager.getInstance().saveSnapshot();
             }
@@ -181,6 +175,43 @@ public class WorkLoadManager {
             threads.add(thread);
             threadPool.submit(thread);
         }
+    }
+    
+    private CompletableFuture<Integer> removeThreads(List<WorkerThread> threads, Model model, int currentWorkers, int maxWorker, CompletableFuture<Integer> future) {
+        for (int i = currentWorkers - 1; i >= maxWorker; --i) {
+            WorkerThread thread = threads.remove(i);
+            WorkerLifeCycle lifecycle = thread.getLifeCycle();
+            thread.shutdown();
+    
+            Process workerProcess = lifecycle.getProcess();
+    
+            // Need to check worker process here since thread.shutdown() -> lifecycle.exit()
+            // -> This may nullify process object per destroyForcibly doc.
+            if (workerProcess != null && workerProcess.isAlive()) {
+                boolean workerDestroyed = false;
+                try {
+                    String cmd = String.format(OSUtils.getKillCmd(), workerProcess.pid());
+                    Process workerKillProcess = Runtime.getRuntime().exec(cmd, null, null);
+                    workerDestroyed =
+                            workerKillProcess.waitFor(
+                                    configManager.getUnregisterModelTimeout(),
+                                    TimeUnit.SECONDS);
+                } catch (InterruptedException | IOException e) {
+                    logger.warn(
+                            "WorkerThread interrupted during waitFor, possible async resource cleanup.");
+                    future.complete(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                    return future;
+                }
+                if (!workerDestroyed) {
+                    logger.warn(
+                            "WorkerThread timed out while cleaning, please resend request.");
+                    future.complete(HttpURLConnection.HTTP_CLIENT_TIMEOUT);
+                    return future;
+                }
+            }
+        }
+        future.complete(HttpURLConnection.HTTP_OK);  
+        return future;
     }
 
     public void scheduleAsync(Runnable r) {
