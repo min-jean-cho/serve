@@ -68,6 +68,11 @@ public final class ConfigManager {
 
     // IPEX config option that can be set at config.properties
     private static final String TS_IPEX_ENABLE = "ipex_enable";
+    private static final String TS_IPEX_DTYPE = "ipex_dtype";
+    private static final String TS_IPEX_MODE = "ipex_mode";
+    private static final String TS_IPEX_CHANNEL_LAST = "ipex_channel_last";
+    private static final String TS_IPEX_INPUT_TENSOR_SHAPE = "ipex_input_tensor_shape";
+    
     private static final String TS_CPU_LAUNCHER_ENABLE = "cpu_launcher_enable";
     private static final String TS_CPU_LAUNCHER_ARGS = "cpu_launcher_args";
 
@@ -700,6 +705,10 @@ public final class ConfigManager {
         // Append properties used by backend worker here
         config.put("TS_DECODE_INPUT_REQUEST", prop.getProperty(TS_DECODE_INPUT_REQUEST, "true"));
         config.put("TS_IPEX_ENABLE", prop.getProperty(TS_IPEX_ENABLE, "false"));
+        config.put("TS_IPEX_DTYPE", prop.getProperty(TS_IPEX_DTYPE, "float32"));
+        config.put("TS_IPEX_MODE", prop.getProperty(TS_IPEX_MODE, "imperative"));
+        config.put("TS_IPEX_CHANNEL_LAST", prop.getProperty(TS_IPEX_CHANNEL_LAST, "true"));
+        config.put("TS_IPEX_INPUT_TENSOR_SHAPE", prop.getProperty(TS_IPEX_INPUT_TENSOR_SHAPE, null));
         return config;
     }
 

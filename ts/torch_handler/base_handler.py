@@ -85,9 +85,42 @@ class BaseHandler(abc.ABC):
             self.model = self._load_torchscript_model(model_pt_path)
 
         self.model.eval()
+        
         if ipex_enabled:
-            self.model = self.model.to(memory_format=torch.channels_last)
-            self.model = ipex.optimize(self.model)
+            if os.environ.get("TS_IPEX_CHANNEl_LAST", "true") == "true":
+                self.model = self.model.to(memory_format=torch.channels_last)            
+            
+            if os.environ.get("TS_IPEX_DTYPE", "float32") == "float32":
+                self.model = ipex.optimize(self.model, dtype=torch.float32)
+            elif os.environ.get("TS_IPEX_DTYPE", "float32") == "bfloat16":
+                self.model = ipex.optimize(self.model, dtype=torch.bfloat16)
+            
+            
+            if os.environ.get("TS_IPEX_MODE", "imperative") == "torchscript":
+                if os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE", "null") == "null":
+                    logger.debug("Please specify valid input tensor shape for torchscript mode.")
+                else:
+                    print(os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE"), type(os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE")))
+                    input_tensor_shape = os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE")
+                    print(input_tensor_shape.split(","))
+                    input_tensor_shape = tuple(int(x) for x in input_tensor_shape.split(","))
+                    
+                jit_inputs = torch.randn(input_tensor_shape)
+                
+                if os.environ.get("TS_IPEX_CHANNEl_LAST", "true") == "true":
+                    jit_inputs = jit_inputs.contiguous(memory_format=torch.channels_last)
+                
+                print("jit_inputs: ", jit_inputs.size())
+                
+                if os.environ.get("TS_IPEX_DTYPE", "float32") == "float32":
+                    with torch.no_grad():
+                        self.model = torch.jit.trace(self.model, jit_inputs)
+                        self.model = torch.jit.freeze(self.model)
+                elif os.environ.get("TS_IPEX_DTYPE", "float32") == "bfloat16":
+                    with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16, cache_enabled=True):
+                        with torch.no_grad():
+                            self.model = torch.jit.trace(self.model, jit_inputs)
+                            self.model = torch.jit.freeze(self.model)
 
         logger.debug('Model file %s loaded successfully', model_pt_path)
 
@@ -219,7 +252,16 @@ class BaseHandler(abc.ABC):
                 data_preprocess = self.preprocess(data)
 
                 if not self._is_explain():
-                    output = self.inference(data_preprocess)
+                    if ipex_enabled:
+                        if os.environ.get("TS_IPEX_CHANNEl_LAST", "true") == "true":
+                            data_preprocess = data_preprocess.contiguous(memory_format=torch.channels_last)
+                        if os.environ.get("TS_IPEX_DTYPE", "float32") == "bfloat16":
+                            with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16, cache_enabled=True):
+                                output = self.inference(data_preprocess)
+                        else:
+                            output = self.inference(data_preprocess)
+                    else:    
+                        output = self.inference(data_preprocess)
                     output = self.postprocess(output)
                 else:
                     output = self.explain_handle(data_preprocess, data)
@@ -263,7 +305,16 @@ class BaseHandler(abc.ABC):
                 data_preprocess = self.preprocess(data)
             if not self._is_explain():
                 with record_function("inference"):
-                    output = self.inference(data_preprocess)
+                    if ipex_enabled:
+                        if os.environ.get("TS_IPEX_CHANNEl_LAST", "true") == "true":
+                            data_preprocess = data_preprocess.contiguous(memory_format=torch.channels_last)
+                        if os.environ.get("TS_IPEX_DTYPE", "float32") == "bfloat16":
+                            with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16, cache_enabled=True):
+                                output = self.inference(data_preprocess)
+                        else:
+                            output = self.inference(data_preprocess)
+                    else:
+                        output = self.inference(data_preprocess)
                 with record_function("postprocess"):
                     output = self.postprocess(output)
             else:
