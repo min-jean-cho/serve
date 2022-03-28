@@ -100,17 +100,13 @@ class BaseHandler(abc.ABC):
                 if os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE", "null") == "null":
                     logger.debug("Please specify valid input tensor shape for torchscript mode.")
                 else:
-                    print(os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE"), type(os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE")))
                     input_tensor_shape = os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE")
-                    print(input_tensor_shape.split(","))
                     input_tensor_shape = tuple(int(x) for x in input_tensor_shape.split(","))
                     
                 jit_inputs = torch.randn(input_tensor_shape)
                 
                 if os.environ.get("TS_IPEX_CHANNEl_LAST", "true") == "true":
                     jit_inputs = jit_inputs.contiguous(memory_format=torch.channels_last)
-                
-                print("jit_inputs: ", jit_inputs.size())
                 
                 if os.environ.get("TS_IPEX_DTYPE", "float32") == "float32":
                     with torch.no_grad():
