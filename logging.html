@@ -116,12 +116,20 @@
                   <span class="dropdown-title">torchvision</span>
                   <p></p>
                 </a>
-                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/elastic/">
-                  <span class="dropdown-title">TorchElastic</span>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/torchrec">
+                  <span class="dropdown-title">TorchRec</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/data">
+                  <span class="dropdown-title">TorchData</span>
                   <p></p>
                 </a>
                 <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/serve/">
                   <span class="dropdown-title">TorchServe</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/torchx/">
+                  <span class="dropdown-title">TorchX</span>
                   <p></p>
                 </a>
                 <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/xla">
@@ -241,7 +249,7 @@
 <li class="toctree-l1"><a class="reference internal" href="use_cases.html">16. Torchserve Use Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflows.html">17. TorchServe Workflows</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inference_api.html">Inference API</a></li>
@@ -250,6 +258,16 @@
 <li class="toctree-l1"><a class="reference internal" href="rest_api.html">TorchServe REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_management_api.html">Management API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/ts.html">ts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.html">ts.torch_handler package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ts.metrics.html">ts.metrics package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ts.model_service.html">ts.model_service package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ts.protocol.html">ts.protocol package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">serve</a></li>
 </ul>
 
             
@@ -330,9 +348,9 @@ To further understand how to customize metrics or define custom logging layouts,
 <section id="prerequisites">
 <h2><span class="section-number">8.1. </span>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Be familiar with log4j configuration properties.
+<li><p>Be familiar with log4j2 configuration.
 For information on how to configure log4j parameters, see <a class="reference external" href="https://logging.apache.org/log4j/2.x/manual/configuration.html">Logging Services</a>.</p></li>
-<li><p>Be familiar with the default <a class="reference external" href="https://github.com/pytorch/serve/blob/master/frontend/server/src/main/resources/log4j.properties">log4j.properties</a> used by TorchServe.</p></li>
+<li><p>Be familiar with the default <a class="reference external" href="https://github.com/pytorch/serve/blob/master/frontend/server/src/main/resources/log4j2.xml">log4j2.xml</a> used by TorchServe.</p></li>
 </ul>
 </section>
 <section id="types-of-logs">
@@ -345,15 +363,17 @@ For information on how to configure log4j parameters, see <a class="reference ex
 <section id="access-logs">
 <h3><span class="section-number">8.2.1. </span>Access Logs<a class="headerlink" href="#access-logs" title="Permalink to this headline">¶</a></h3>
 <p>These logs collect the access pattern to TorchServe. The configuration for access logs are as follows:</p>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">log4j.logger.ACCESS_LOG</span> <span class="o">=</span> <span class="s">INFO, access_log</span>
-
-
-<span class="na">log4j.appender.access_log</span> <span class="o">=</span> <span class="s">org.apache.log4j.RollingFileAppender</span>
-<span class="na">log4j.appender.access_log.File</span> <span class="o">=</span> <span class="s">${LOG_LOCATION}/access_log.log</span>
-<span class="na">log4j.appender.access_log.MaxFileSize</span> <span class="o">=</span> <span class="s">100MB</span>
-<span class="na">log4j.appender.access_log.MaxBackupIndex</span> <span class="o">=</span> <span class="s">5</span>
-<span class="na">log4j.appender.access_log.layout</span> <span class="o">=</span> <span class="s">org.apache.log4j.PatternLayout</span>
-<span class="na">log4j.appender.access_log.layout.ConversionPattern</span> <span class="o">=</span> <span class="s">%d{ISO8601} - %m%n</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>		<span class="nt">&lt;RollingFile</span>
+				<span class="na">name=</span><span class="s">&quot;access_log&quot;</span>
+				<span class="na">fileName=</span><span class="s">&quot;${env:LOG_LOCATION:-logs}/access_log.log&quot;</span>
+				<span class="na">filePattern=</span><span class="s">&quot;${env:LOG_LOCATION:-logs}/access_log.%d{dd-MMM}.log.gz&quot;</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{ISO8601} - %m%n&quot;</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;Policies&gt;</span>
+				<span class="nt">&lt;SizeBasedTriggeringPolicy</span> <span class="na">size=</span><span class="s">&quot;100 MB&quot;</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;TimeBasedTriggeringPolicy/&gt;</span>
+			<span class="nt">&lt;/Policies&gt;</span>
+			<span class="nt">&lt;DefaultRolloverStrategy</span> <span class="na">max=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/RollingFile&gt;</span>
 </pre></div>
 </div>
 <p>As defined in the properties file, the access logs are collected in {LOG_LOCATION}/access_log.log file.
@@ -368,15 +388,17 @@ When you load TorchServe with a model and run inference against the server, the 
 <h3><span class="section-number">8.2.2. </span>TorchServe Logs<a class="headerlink" href="#torchserve-logs" title="Permalink to this headline">¶</a></h3>
 <p>These logs collect all the logs from TorchServe and from the backend workers (the custom model code).
 The default configuration pertaining to TorchServe logs are as follows:</p>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">log4j.logger.com.amazonaws.ml.ts</span> <span class="o">=</span> <span class="s">DEBUG, ts_log</span>
-
-
-<span class="na">log4j.appender.ts_log</span> <span class="o">=</span> <span class="s">org.apache.log4j.RollingFileAppender</span>
-<span class="na">log4j.appender.ts_log.File</span> <span class="o">=</span> <span class="s">${LOG_LOCATION}/ts_log.log</span>
-<span class="na">log4j.appender.ts_log.MaxFileSize</span> <span class="o">=</span> <span class="s">100MB</span>
-<span class="na">log4j.appender.ts_log.MaxBackupIndex</span> <span class="o">=</span> <span class="s">5</span>
-<span class="na">log4j.appender.ts_log.layout</span> <span class="o">=</span> <span class="s">org.apache.log4j.PatternLayout</span>
-<span class="na">log4j.appender.ts_log.layout.ConversionPattern</span> <span class="o">=</span> <span class="s">%d{ISO8601} [%-5p] %t %c - %m%n</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>		<span class="nt">&lt;RollingFile</span>
+				<span class="na">name=</span><span class="s">&quot;ts_log&quot;</span>
+				<span class="na">fileName=</span><span class="s">&quot;${env:LOG_LOCATION:-logs}/ts_log.log&quot;</span>
+				<span class="na">filePattern=</span><span class="s">&quot;${env:LOG_LOCATION:-logs}/ts_log.%d{dd-MMM}.log.gz&quot;</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{ISO8601} [%-5p] %t %c - %m%n&quot;</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;Policies&gt;</span>
+				<span class="nt">&lt;SizeBasedTriggeringPolicy</span> <span class="na">size=</span><span class="s">&quot;100 MB&quot;</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;TimeBasedTriggeringPolicy/&gt;</span>
+			<span class="nt">&lt;/Policies&gt;</span>
+			<span class="nt">&lt;DefaultRolloverStrategy</span> <span class="na">max=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/RollingFile&gt;</span>
 </pre></div>
 </div>
 <p>This configuration by default dumps all the logs above <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> level.</p>
@@ -406,11 +428,11 @@ e...
 </section>
 <section id="modify-the-behavior-of-the-logs">
 <h2><span class="section-number">8.4. </span>Modify the behavior of the logs<a class="headerlink" href="#modify-the-behavior-of-the-logs" title="Permalink to this headline">¶</a></h2>
-<p>To modify the default logging behavior, define a <code class="docutils literal notranslate"><span class="pre">log4j.properties</span></code> file. There are two ways of starting TorchServe with custom logs:</p>
+<p>To modify the default logging behavior, define a <code class="docutils literal notranslate"><span class="pre">log4j2.xml</span></code> file. There are two ways of starting TorchServe with custom logs:</p>
 <section id="provide-with-config-properties">
 <h3><span class="section-number">8.4.1. </span>Provide with config.properties<a class="headerlink" href="#provide-with-config-properties" title="Permalink to this headline">¶</a></h3>
-<p>After you define a custom <code class="docutils literal notranslate"><span class="pre">log4j.properties</span></code> file, add the following to the <code class="docutils literal notranslate"><span class="pre">config.properties</span></code> file:</p>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">vmargs</span><span class="o">=</span><span class="s">-Dlog4j.configuration=file:///path/to/custom/log4j.properties</span>
+<p>After you define a custom <code class="docutils literal notranslate"><span class="pre">log4j2.xml</span></code> file, add the following to the <code class="docutils literal notranslate"><span class="pre">config.properties</span></code> file:</p>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">vmargs</span><span class="o">=</span><span class="s">-Dlog4j.configurationFile=file:///path/to/custom/log4j2.xml</span>
 </pre></div>
 </div>
 <p>Then start TorchServe as follows:</p>
@@ -418,7 +440,7 @@ e...
 </pre></div>
 </div>
 <p>Alternatively</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ torchserve --start --log-config /path/to/custom/log4j.properties
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ torchserve --start --log-config /path/to/custom/log4j2.xml
 </pre></div>
 </div>
 </section>
@@ -588,37 +610,6 @@ To enable asynchronous logging, add following property in <code class="docutils 
         <div class="footer-links-col follow-us-col">
           <ul>
             <li class="list-title">Stay Connected</li>
-            <li>
-              <div id="mc_embed_signup">
-                <form
-                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
-                  method="post"
-                  id="mc-embedded-subscribe-form"
-                  name="mc-embedded-subscribe-form"
-                  class="email-subscribe-form validate"
-                  target="_blank"
-                  novalidate>
-                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
-                    <div class="mc-field-group">
-                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
-                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
-                    </div>
-
-                    <div id="mce-responses" class="clear">
-                      <div class="response" id="mce-error-response" style="display:none"></div>
-                      <div class="response" id="mce-success-response" style="display:none"></div>
-                    </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
-
-                    <div class="clear">
-                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-            </li>
           </ul>
 
           <div class="footer-social-icons">
@@ -701,11 +692,11 @@ To enable asynchronous logging, add following property in <code class="docutils 
             </li>
 
             <li>
-              <a href="https://pytorch.org/elastic/">TorchElastic</a>
+              <a href="https://pytorch.org/serve/">TorchServe</a>
             </li>
 
             <li>
-              <a href="https://pytorch.org/serve/">TorchServe</a>
+              <a href="https://pytorch.org/torchx/">TorchX</a>
             </li>
 
             <li>
