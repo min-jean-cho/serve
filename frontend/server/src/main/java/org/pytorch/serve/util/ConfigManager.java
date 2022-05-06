@@ -72,6 +72,9 @@ public final class ConfigManager {
     private static final String TS_IPEX_MODE = "ipex_mode";
     private static final String TS_IPEX_CHANNEL_LAST = "ipex_channel_last";
     private static final String TS_IPEX_INPUT_TENSOR_SHAPE = "ipex_input_tensor_shape";
+    private static final String TS_IPEX_INPUT_TENSOR_DTYPE = "ipex_input_tensor_dtype";
+    private static final String TS_IPEX_CONV_BN_FOLDING = "ipex_conv_bn_folding";
+    private static final String TS_IPEX_QSCHEME = "ipex_qscheme";
     
     private static final String TS_CPU_LAUNCHER_ENABLE = "cpu_launcher_enable";
     private static final String TS_CPU_LAUNCHER_ARGS = "cpu_launcher_args";
@@ -709,6 +712,9 @@ public final class ConfigManager {
         config.put("TS_IPEX_MODE", prop.getProperty(TS_IPEX_MODE, "imperative"));
         config.put("TS_IPEX_CHANNEL_LAST", prop.getProperty(TS_IPEX_CHANNEL_LAST, "true"));
         config.put("TS_IPEX_INPUT_TENSOR_SHAPE", prop.getProperty(TS_IPEX_INPUT_TENSOR_SHAPE, null));
+        config.put("TS_IPEX_INPUT_TENSOR_DTYPE", prop.getProperty(TS_IPEX_INPUT_TENSOR_DTYPE, null));
+        config.put("TS_IPEX_CONV_BN_FOLDING", prop.getProperty(TS_IPEX_CONV_BN_FOLDING, "false"));
+        config.put("TS_IPEX_QSCHEME", prop.getProperty(TS_IPEX_QSCHEME, "per_tensor_affine"));
         return config;
     }
 
