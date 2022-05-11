@@ -3,22 +3,22 @@ Base default handler to load torchscript or eager mode [state_dict] models
 Also, provides handle method per torch serve custom model specification
 """
 
+from ..utils.util import list_classes_from_module, load_label_mapping
+from pkg_resources import packaging
 import abc
 import logging
 import os
 import importlib.util
 import time
 import torch
-from pkg_resources import packaging
-from ..utils.util import list_classes_from_module, load_label_mapping
-from .ipex_utils import prepare_ipex_optimized_model
+
+from .ipex_utils import prepare_ipex_optimized_model, prepare_onednn_graph_fused_model
 
 if packaging.version.parse(torch.__version__) >= packaging.version.parse("1.8.1"):
     from torch.profiler import profile, record_function, ProfilerActivity
     PROFILER_AVAILABLE = True
 else:
     PROFILER_AVAILABLE = False
-
 
 logger = logging.getLogger(__name__)
 
@@ -28,25 +28,39 @@ if os.environ.get("TS_IPEX_ENABLE", "false") == "true":
         import intel_extension_for_pytorch as ipex
         ipex_enabled = True
     except ImportError as error:
-        logger.warning("IPEX is enabled but intel-extension-for-pytorch is not installed. Proceeding without IPEX.")
+        logger.warning(
+            "IPEX is enabled but intel-extension-for-pytorch is not installed. Proceeding without IPEX.")
 
 if ipex_enabled:
     ipex_dtype = os.environ.get("TS_IPEX_DTYPE", "float32")
     ipex_mode = os.environ.get("TS_IPEX_MODE", "imperative")
     ipex_channel_last = os.environ.get("TS_IPEX_CHANNEL_LAST", "true")
-    ipex_input_tensor_shapes = os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPE", "null")
+    ipex_input_tensor_shapes = os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPES", "null")
     ipex_input_tensor_dtype = os.environ.get("TS_IPEX_INPUT_TENSOR_DTYPE", "null")
     ipex_conv_bn_folding = os.environ.get("TS_IPEX_CONV_BN_FOLDING", "false")
     ipex_qscheme = os.environ.get("TS_IPEX_QSCHEME", "per_tensor_affine")
-    
+
     if ipex_dtype == "int8" and ipex_mode != "torchscript":
         logger.error("Quantization in IPEX takes advantage of oneDNN graph API. This requires to be executed with TorchScript mode. Please specify ipex_mode as torchscript.")
         exit(-1)
-    
+
     if ipex_mode == "torchscript" and ipex_input_tensor_shapes == "null" or ipex_mode == "torchscript" and ipex_input_tensor_dtype == "null":
-        logger.error("Please specify both input_tensor_shape and input_tensor_dtype to do calibration for torchscript mode")
+        logger.error(
+            "Please specify both ipex_input_tensor_shapes and ipex_input_tensor_dtype to do calibration for torchscript mode")
         exit(-1)
-     
+
+onednn_graph_fusion_enabled = False 
+if os.environ.get("TS_ONEDNN_GRAPH_FUSION_ENABLE", "false") == "true":
+    onednn_graph_fusion_enabled = True
+
+if onednn_graph_fusion_enabled:
+    ipex_input_tensor_shapes = os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPES", "null")
+    ipex_input_tensor_dtype = os.environ.get("TS_IPEX_INPUT_TENSOR_DTYPE", "null")
+    
+    if ipex_input_tensor_shapes == "null" or ipex_input_tensor_dtype == "null":
+        logger.error("oneDNN graph fusion requires torchscript mode. Please specify both ipex_input_tensor_shapes and ipex_input_tensor_dtypes to do calibration for torchscript mode.")
+        exit(-1)
+        
 class BaseHandler(abc.ABC):
     """
     Base default handler to load torchscript or eager mode [state_dict] models
@@ -106,12 +120,16 @@ class BaseHandler(abc.ABC):
             if not os.path.isfile(model_pt_path):
                 raise RuntimeError("Missing the model.pt file")
 
+            torch.jit.enable_onednn_fusion(True)
             self.model = self._load_torchscript_model(model_pt_path)
 
         self.model.eval()
-        
+ 
         if ipex_enabled:
             self.model = prepare_ipex_optimized_model(self.model, ipex_dtype, ipex_mode, ipex_channel_last, ipex_input_tensor_shapes, ipex_input_tensor_dtype, ipex_conv_bn_folding, ipex_qscheme)
+        
+        if onednn_graph_fusion_enabled:
+            self.model = prepare_onednn_graph_fused_model(self.model, ipex_input_tensor_shapes, ipex_input_tensor_dtype)
 
         logger.debug('Model file %s loaded successfully', model_pt_path)
 
@@ -249,13 +267,14 @@ class BaseHandler(abc.ABC):
                 if not self._is_explain():
                     if ipex_enabled:
                         if ipex_channel_last == "true":
-                            data_preprocess = data_preprocess.contiguous(memory_format=torch.channels_last)
+                            data_preprocess = data_preprocess.contiguous(
+                                memory_format=torch.channels_last)
                         if ipex_dtype == "bfloat16":
                             with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16, cache_enabled=True):
                                 output = self.inference(data_preprocess)
                         else:
                             output = self.inference(data_preprocess)
-                    else:    
+                    else:
                         output = self.inference(data_preprocess)
                     output = self.postprocess(output)
                 else:
@@ -279,7 +298,8 @@ class BaseHandler(abc.ABC):
         # Setting the default profiler arguments to profile cpu, gpu usage and record shapes
         # User can override this argument based on the requirement
         if not self.profiler_args:
-            self.profiler_args["activities"] = [ProfilerActivity.CPU, ProfilerActivity.CUDA]
+            self.profiler_args["activities"] = [
+                ProfilerActivity.CPU, ProfilerActivity.CUDA]
             self.profiler_args["record_shapes"] = True
 
         if "on_trace_ready" not in self.profiler_args:
@@ -292,8 +312,10 @@ class BaseHandler(abc.ABC):
                 logging.debug("Model name not found in config")
 
             result_path = os.path.join(result_path, dir_name)
-            self.profiler_args["on_trace_ready"] = torch.profiler.tensorboard_trace_handler(result_path)
-            logger.info("Saving chrome trace to : ", result_path) # pylint: disable=logging-too-many-args
+            self.profiler_args["on_trace_ready"] = torch.profiler.tensorboard_trace_handler(
+                result_path)
+            logger.info("Saving chrome trace to : ",
+                        result_path)  # pylint: disable=logging-too-many-args
 
         with profile(**self.profiler_args) as prof:
             with record_function("preprocess"):
@@ -302,7 +324,8 @@ class BaseHandler(abc.ABC):
                 with record_function("inference"):
                     if ipex_enabled:
                         if ipex_channel_last == "true":
-                            data_preprocess = data_preprocess.contiguous(memory_format=torch.channels_last)
+                            data_preprocess = data_preprocess.contiguous(
+                                memory_format=torch.channels_last)
                         if ipex_dtype == "bfloat16":
                             with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16, cache_enabled=True):
                                 output = self.inference(data_preprocess)
@@ -316,9 +339,9 @@ class BaseHandler(abc.ABC):
                 with record_function("explain"):
                     output = self.explain_handle(data_preprocess, data)
 
-        logger.info(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+        logger.info(prof.key_averages().table(
+            sort_by="cpu_time_total", row_limit=10))
         return output, prof
-
 
     def explain_handle(self, data_preprocess, raw_data):
         """Captum explanations handler

@@ -2,7 +2,7 @@ import os
 import torch
 import torch.fx.experimental.optimization as optimization
 import logging
-import intel_extension_for_pytorch as ipex
+#import intel_extension_for_pytorch as ipex
 logger = logging.getLogger(__name__)
 
 TORCH_DTYPE = {
@@ -25,6 +25,33 @@ TORCH_QSCHEME = {
     "per_tensor_symmetric": torch.per_tensor_symmetric
 }
 
+def get_dummy_tensors(input_tensor_shapes, input_tensor_dtype, ipex_channel_last=False):
+    x = []
+    for input_tensor_shape in input_tensor_shapes.split(";"):
+        input_tensor_shape = tuple(int(_) for _ in input_tensor_shape.split(","))
+        dummy_tensor = torch.ones(input_tensor_shape, dtype=TORCH_DTYPE[input_tensor_dtype])
+        if ipex_channel_last == "true":
+            dummy_tensor = dummy_tensor.contiguous(memory_format=torch.channels_last)
+        x.append(dummy_tensor)
+    return x 
+
+def warmup_forward(f, *args, profiling_count=2):
+    for i in range(profiling_count):
+        results = f(*args)
+    return 
+
+def get_traced_model(m, x, freeze=True):
+    if isinstance(m, torch.nn.Module):
+        m.eval()
+    with torch.no_grad(), torch._jit_internal._disable_emit_hooks():
+        if not isinstance(m, torch.jit.ScriptModule):
+            traced = torch.jit.trace(m, x)
+        else:
+            traced = m
+        if isinstance(traced, torch.nn.Module) and freeze:
+            traced = torch.jit.freeze(traced)
+        warmup_forward(traced, *x)
+    return traced 
 
 def prepare_ipex_optimized_model(model, ipex_dtype, ipex_mode, ipex_channel_last, input_tensor_shapes, input_tensor_dtype, ipex_conv_bn_folding, ipex_qscheme):
     if ipex_channel_last == "true":
@@ -38,16 +65,7 @@ def prepare_ipex_optimized_model(model, ipex_dtype, ipex_mode, ipex_channel_last
 
     # torchscript
     if ipex_mode == "torchscript":
-        x = []
-        for input_tensor_shape in input_tensor_shapes.split(";"):
-            input_tensor_shape = tuple(int(_)
-                                       for _ in input_tensor_shape.split(","))
-            dummy_tensor = torch.ones(
-                input_tensor_shape, dtype=TORCH_DTYPE[input_tensor_dtype])
-            if ipex_channel_last == "true":
-                dummy_tensor = dummy_tensor.contiguous(
-                    memory_format=torch.channels_last)
-            x.append(dummy_tensor)
+        x = get_dummy_tensors(input_tensor_shapes, input_tensor_dtype, ipex_channel_last)
         
         if ipex_dtype == "float32":
             with torch.no_grad():
@@ -73,3 +91,9 @@ def prepare_ipex_optimized_model(model, ipex_dtype, ipex_mode, ipex_channel_last
             # conversion
             model = ipex.quantization.convert(model, conf, x)
     return model
+    
+def prepare_onednn_graph_fused_model(model, input_tensor_shapes, input_tensor_dtype):
+    torch.jit.enable_onednn_fusion(True)
+    x = get_dummy_tensors(input_tensor_shapes, input_tensor_dtype)
+    traced = get_traced_model(model, x)
+    return traced 

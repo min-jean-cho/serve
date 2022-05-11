@@ -71,10 +71,12 @@ public final class ConfigManager {
     private static final String TS_IPEX_DTYPE = "ipex_dtype";
     private static final String TS_IPEX_MODE = "ipex_mode";
     private static final String TS_IPEX_CHANNEL_LAST = "ipex_channel_last";
-    private static final String TS_IPEX_INPUT_TENSOR_SHAPE = "ipex_input_tensor_shape";
+    private static final String TS_IPEX_INPUT_TENSOR_SHAPES = "ipex_input_tensor_shapes";
     private static final String TS_IPEX_INPUT_TENSOR_DTYPE = "ipex_input_tensor_dtype";
     private static final String TS_IPEX_CONV_BN_FOLDING = "ipex_conv_bn_folding";
     private static final String TS_IPEX_QSCHEME = "ipex_qscheme";
+    // oneDNN Graph fusion config option that can be set at config.properties 
+    private static final String TS_ONEDNN_GRAPH_FUSION_ENABLE = "onednn_graph_fusion_enable";
     
     private static final String TS_CPU_LAUNCHER_ENABLE = "cpu_launcher_enable";
     private static final String TS_CPU_LAUNCHER_ARGS = "cpu_launcher_args";
@@ -707,14 +709,17 @@ public final class ConfigManager {
         HashMap<String, String> config = new HashMap<>();
         // Append properties used by backend worker here
         config.put("TS_DECODE_INPUT_REQUEST", prop.getProperty(TS_DECODE_INPUT_REQUEST, "true"));
+        
         config.put("TS_IPEX_ENABLE", prop.getProperty(TS_IPEX_ENABLE, "false"));
         config.put("TS_IPEX_DTYPE", prop.getProperty(TS_IPEX_DTYPE, "float32"));
         config.put("TS_IPEX_MODE", prop.getProperty(TS_IPEX_MODE, "imperative"));
         config.put("TS_IPEX_CHANNEL_LAST", prop.getProperty(TS_IPEX_CHANNEL_LAST, "true"));
-        config.put("TS_IPEX_INPUT_TENSOR_SHAPE", prop.getProperty(TS_IPEX_INPUT_TENSOR_SHAPE, null));
+        config.put("TS_IPEX_INPUT_TENSOR_SHAPES", prop.getProperty(TS_IPEX_INPUT_TENSOR_SHAPES, null));
         config.put("TS_IPEX_INPUT_TENSOR_DTYPE", prop.getProperty(TS_IPEX_INPUT_TENSOR_DTYPE, null));
         config.put("TS_IPEX_CONV_BN_FOLDING", prop.getProperty(TS_IPEX_CONV_BN_FOLDING, "false"));
         config.put("TS_IPEX_QSCHEME", prop.getProperty(TS_IPEX_QSCHEME, "per_tensor_affine"));
+        
+        config.put("TS_ONEDNN_GRAPH_FUSION_ENABLE", prop.getProperty(TS_ONEDNN_GRAPH_FUSION_ENABLE, "false"));
         return config;
     }
 
