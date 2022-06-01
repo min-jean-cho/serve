@@ -4,6 +4,7 @@ Also, provides handle method per torch serve custom model specification
 """
 
 from ..utils.util import list_classes_from_module, load_label_mapping
+from ..utils.optimization import OPTIMIZATIONS
 from pkg_resources import packaging
 import abc
 import logging
@@ -11,8 +12,6 @@ import os
 import importlib.util
 import time
 import torch
-
-from .ipex_utils import prepare_ipex_optimized_model, prepare_onednn_graph_fused_model
 
 if packaging.version.parse(torch.__version__) >= packaging.version.parse("1.8.1"):
     from torch.profiler import profile, record_function, ProfilerActivity
@@ -28,39 +27,12 @@ if os.environ.get("TS_IPEX_ENABLE", "false") == "true":
         import intel_extension_for_pytorch as ipex
         ipex_enabled = True
     except ImportError as error:
-        logger.warning(
-            "IPEX is enabled but intel-extension-for-pytorch is not installed. Proceeding without IPEX.")
-
-if ipex_enabled:
-    ipex_dtype = os.environ.get("TS_IPEX_DTYPE", "float32")
-    ipex_mode = os.environ.get("TS_IPEX_MODE", "imperative")
-    ipex_channel_last = os.environ.get("TS_IPEX_CHANNEL_LAST", "true")
-    ipex_input_tensor_shapes = os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPES", "null")
-    ipex_input_tensor_dtype = os.environ.get("TS_IPEX_INPUT_TENSOR_DTYPE", "null")
-    ipex_conv_bn_folding = os.environ.get("TS_IPEX_CONV_BN_FOLDING", "false")
-    ipex_qscheme = os.environ.get("TS_IPEX_QSCHEME", "per_tensor_affine")
-
-    if ipex_dtype == "int8" and ipex_mode != "torchscript":
-        logger.error("Quantization in IPEX takes advantage of oneDNN graph API. This requires to be executed with TorchScript mode. Please specify ipex_mode as torchscript.")
-        exit(-1)
-
-    if ipex_mode == "torchscript" and ipex_input_tensor_shapes == "null" or ipex_mode == "torchscript" and ipex_input_tensor_dtype == "null":
-        logger.error(
-            "Please specify both ipex_input_tensor_shapes and ipex_input_tensor_dtype to do calibration for torchscript mode")
-        exit(-1)
+        logger.warning("IPEX is enabled but intel-extension-for-pytorch is not installed. Proceeding without IPEX.")
 
 onednn_graph_fusion_enabled = False 
 if os.environ.get("TS_ONEDNN_GRAPH_FUSION_ENABLE", "false") == "true":
     onednn_graph_fusion_enabled = True
 
-if onednn_graph_fusion_enabled:
-    ipex_input_tensor_shapes = os.environ.get("TS_IPEX_INPUT_TENSOR_SHAPES", "null")
-    ipex_input_tensor_dtype = os.environ.get("TS_IPEX_INPUT_TENSOR_DTYPE", "null")
-    
-    if ipex_input_tensor_shapes == "null" or ipex_input_tensor_dtype == "null":
-        logger.error("oneDNN graph fusion requires torchscript mode. Please specify both ipex_input_tensor_shapes and ipex_input_tensor_dtypes to do calibration for torchscript mode.")
-        exit(-1)
-        
 class BaseHandler(abc.ABC):
     """
     Base default handler to load torchscript or eager mode [state_dict] models
@@ -78,6 +50,7 @@ class BaseHandler(abc.ABC):
         self.explain = False
         self.target = 0
         self.profiler_args = {}
+        self.optimization = None 
 
     def initialize(self, context):
         """Initialize function loads the model.pt file and initialized the model object.
@@ -120,16 +93,13 @@ class BaseHandler(abc.ABC):
             if not os.path.isfile(model_pt_path):
                 raise RuntimeError("Missing the model.pt file")
 
-            torch.jit.enable_onednn_fusion(True)
             self.model = self._load_torchscript_model(model_pt_path)
 
         self.model.eval()
- 
-        if ipex_enabled:
-            self.model = prepare_ipex_optimized_model(self.model, ipex_dtype, ipex_mode, ipex_channel_last, ipex_input_tensor_shapes, ipex_input_tensor_dtype, ipex_conv_bn_folding, ipex_qscheme)
-        
-        if onednn_graph_fusion_enabled:
-            self.model = prepare_onednn_graph_fused_model(self.model, ipex_input_tensor_shapes, ipex_input_tensor_dtype)
+
+        if ipex_enabled or onednn_graph_fusion_enabled:
+            self.optimization = OPTIMIZATIONS["ipex"](self.model, ipex_enabled, onednn_graph_fusion_enabled)
+            self.model = self.optimization.optimize()
 
         logger.debug('Model file %s loaded successfully', model_pt_path)
 
@@ -266,13 +236,12 @@ class BaseHandler(abc.ABC):
 
                 if not self._is_explain():
                     if ipex_enabled:
-                        if ipex_channel_last == "true":
-                            data_preprocess = data_preprocess.contiguous(
-                                memory_format=torch.channels_last)
-                        if ipex_dtype == "bfloat16":
-                            with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16, cache_enabled=True):
+                        if self.optimization.channel_last == "true":
+                            data_preprocess = data_preprocess.contiguous(memory_format=torch.channels_last)
+                        if self.optimization.dtype == "bfloat16":
+                            with torch.cpu.amp.autocast():
                                 output = self.inference(data_preprocess)
-                        else:
+                        else: # float32 or int8
                             output = self.inference(data_preprocess)
                     else:
                         output = self.inference(data_preprocess)
@@ -323,13 +292,12 @@ class BaseHandler(abc.ABC):
             if not self._is_explain():
                 with record_function("inference"):
                     if ipex_enabled:
-                        if ipex_channel_last == "true":
-                            data_preprocess = data_preprocess.contiguous(
-                                memory_format=torch.channels_last)
-                        if ipex_dtype == "bfloat16":
-                            with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16, cache_enabled=True):
+                        if self.optimization.channel_last == "true":
+                            data_preprocess = data_preprocess.contiguous(memory_format=torch.channels_last)
+                        if self.optimization.dtype == "bfloat16":
+                            with torch.cpu.amp.autocast():
                                 output = self.inference(data_preprocess)
-                        else:
+                        else: # float32 or int8
                             output = self.inference(data_preprocess)
                     else:
                         output = self.inference(data_preprocess)
