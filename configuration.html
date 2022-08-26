@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -229,7 +229,7 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">1. TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">2. Troubleshooting Guide</a></li>
@@ -244,12 +244,13 @@
 <li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">14. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">15. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases.html">16. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">17. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">17. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">18. TorchServe Workflows</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
+<p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inference_api.html">Inference API</a></li>
@@ -259,7 +260,7 @@
 <li class="toctree-l1"><a class="reference internal" href="workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -429,12 +430,12 @@ See <a class="reference external" href="#enable-ssl">Enable SSL</a> to configure
 <li><p>To run predictions on models on a public IP address, specify the IP address as <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>.
 To run predictions on models on a specific IP address, specify the IP address and port.</p></li>
 </ul>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="c"># bind inference API to all network interfaces with SSL enabled</span>
-<span class="na">inference_address</span><span class="o">=</span><span class="s">https://0.0.0.0:8443</span>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="c"># bind inference API to all network interfaces with SSL enabled</span><span class="w"></span>
+<span class="na">inference_address</span><span class="o">=</span><span class="s">https://0.0.0.0:8443</span><span class="w"></span>
 </pre></div>
 </div>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="c"># bind inference API to private network interfaces</span>
-<span class="na">inference_address</span><span class="o">=</span><span class="s">https://172.16.1.10:8080</span>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="c"># bind inference API to private network interfaces</span><span class="w"></span>
+<span class="na">inference_address</span><span class="o">=</span><span class="s">https://172.16.1.10:8080</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -489,11 +490,11 @@ For example, to receive https traffic on port 8443, you would use: <code class="
 </pre></div>
 </div>
 <p>Config following property in config.properties:</p>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">inference_address</span><span class="o">=</span><span class="s">https://127.0.0.1:8443</span>
-<span class="na">management_address</span><span class="o">=</span><span class="s">https://127.0.0.1:8444</span>
-<span class="na">metrics_address</span><span class="o">=</span><span class="s">https://127.0.0.1:8445</span>
-<span class="na">private_key_file</span><span class="o">=</span><span class="s">mykey.key</span>
-<span class="na">certificate_file</span><span class="o">=</span><span class="s">mycert.pem</span>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">inference_address</span><span class="o">=</span><span class="s">https://127.0.0.1:8443</span><span class="w"></span>
+<span class="na">management_address</span><span class="o">=</span><span class="s">https://127.0.0.1:8444</span><span class="w"></span>
+<span class="na">metrics_address</span><span class="o">=</span><span class="s">https://127.0.0.1:8445</span><span class="w"></span>
+<span class="na">private_key_file</span><span class="o">=</span><span class="s">mykey.key</span><span class="w"></span>
+<span class="na">certificate_file</span><span class="o">=</span><span class="s">mycert.pem</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -504,19 +505,19 @@ For example, to receive https traffic on port 8443, you would use: <code class="
 web application running at one origin (domain) have permission to access selected
 resources from a server at a different origin.</p>
 <p>CORS is disabled by default. Configure following properties in config.properties file to enable CORS:</p>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="c"># cors_allowed_origin is required to enable CORS, use &#39;*&#39; or your domain name</span>
-<span class="na">cors_allowed_origin</span><span class="o">=</span><span class="s">https://yourdomain.com</span>
-<span class="c"># required if you want to use preflight request</span>
-<span class="na">cors_allowed_methods</span><span class="o">=</span><span class="s">GET, POST, PUT, OPTIONS</span>
-<span class="c"># required if the request has an Access-Control-Request-Headers header</span>
-<span class="na">cors_allowed_headers</span><span class="o">=</span><span class="s">X-Custom-Header</span>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="c"># cors_allowed_origin is required to enable CORS, use &#39;*&#39; or your domain name</span><span class="w"></span>
+<span class="na">cors_allowed_origin</span><span class="o">=</span><span class="s">https://yourdomain.com</span><span class="w"></span>
+<span class="c"># required if you want to use preflight request</span><span class="w"></span>
+<span class="na">cors_allowed_methods</span><span class="o">=</span><span class="s">GET, POST, PUT, OPTIONS</span><span class="w"></span>
+<span class="c"># required if the request has an Access-Control-Request-Headers header</span><span class="w"></span>
+<span class="na">cors_allowed_headers</span><span class="o">=</span><span class="s">X-Custom-Header</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="prefer-direct-buffer">
 <h3><span class="section-number">5.3.7. </span>Prefer direct buffer<a class="headerlink" href="#prefer-direct-buffer" title="Permalink to this headline">¶</a></h3>
 <p>Configuration parameter prefer_direct_buffer controls if the model server will be using direct memory specified by -XX:MaxDirectMemorySize. This parameter is for model server only and  doesn’t affect other packages’ usage of direct memory buffer. Default: false</p>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">prefer_direct_buffer</span><span class="o">=</span><span class="s">true</span>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">prefer_direct_buffer</span><span class="o">=</span><span class="s">true</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -524,7 +525,7 @@ resources from a server at a different origin.</p>
 <h3><span class="section-number">5.3.8. </span>Allow model specific custom python packages.<a class="headerlink" href="#allow-model-specific-custom-python-packages" title="Permalink to this headline">¶</a></h3>
 <p>Custom models/handlers may depend on different python packages which are not installed by-default as a part of <code class="docutils literal notranslate"><span class="pre">TorchServe</span></code> setup. User can supply a requirements.txt file containing the required list of python packages to be installed by <code class="docutils literal notranslate"><span class="pre">TorchServe</span></code> for seamless model serving.
 Configuration parameter <code class="docutils literal notranslate"><span class="pre">install_py_dep_per_model</span></code> controls if the model server will install the python packages using the <code class="docutils literal notranslate"><span class="pre">requirements</span></code> file supplied with the model archive. Default: false</p>
-<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">install_py_dep_per_model</span><span class="o">=</span><span class="s">true</span>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">install_py_dep_per_model</span><span class="o">=</span><span class="s">true</span><span class="w"></span>
 </pre></div>
 </div>
 <p>User can also supply custom python packages in zip or tar.gz format using the <code class="docutils literal notranslate"><span class="pre">--extra-files</span></code> flag while creating the model-archive and make an entry of the file name in the <code class="docutils literal notranslate"><span class="pre">requirements</span></code> file.</p>
@@ -610,7 +611,7 @@ This is used in conjunction with <code class="docutils literal notranslate"><spa
 <span class="s">        &quot;responseTimeout&quot;: 120\</span>
 <span class="s">    }\</span>
 <span class="s">  }\</span>
-<span class="s">}</span>
+<span class="s">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -740,8 +741,8 @@ eg : To allow base URLs <code class="docutils literal notranslate"><span class="
          <script src="_static/jquery.js"></script>
          <script src="_static/underscore.js"></script>
          <script src="_static/doctools.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"></script>
+         <script src="_static/katex.min.js"></script>
+         <script src="_static/auto-render.min.js"></script>
          <script src="_static/katex_autorenderer.js"></script>
      
 

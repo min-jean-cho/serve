@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -229,7 +229,7 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">1. TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">2. Troubleshooting Guide</a></li>
@@ -244,12 +244,13 @@
 <li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">14. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">15. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases.html">16. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">17. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">17. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">18. TorchServe Workflows</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
+<p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Inference API</a></li>
@@ -259,7 +260,7 @@
 <li class="toctree-l1"><a class="reference internal" href="workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -373,9 +374,9 @@
 </pre></div>
 </div>
 <p>If the server is running, the response is:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;Healthy&quot;</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Healthy&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -425,10 +426,10 @@ curl http://localhost:8080/predictions/resnet-18/2.0 -F <span class="s2">&quot;d
 </pre></div>
 </div>
 <p>The result is JSON that tells you that the image is most likely a tabby cat. The highest prediction was:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;n02123045 tabby, tabby cat&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;probability&quot;</span><span class="p">:</span> <span class="mf">0.42514491081237793</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n02123045 tabby, tabby cat&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;probability&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.42514491081237793</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -445,24 +446,24 @@ curl http://localhost:8080/predictions/resnet-18/2.0 -F <span class="s2">&quot;d
 </pre></div>
 </div>
 <p>The result is a json that gives you the explanations for the input image</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>  <span class="p">[</span>
-    <span class="p">[</span>
-      <span class="p">[</span>
-        <span class="p">[</span>
-          <span class="mf">0.004570948731989492</span><span class="p">,</span>
-          <span class="mf">0.006216969640322402</span><span class="p">,</span>
-          <span class="mf">0.008197565423679522</span><span class="p">,</span>
-          <span class="mf">0.009563574612830427</span><span class="p">,</span>
-          <span class="mf">0.008999274832810742</span><span class="p">,</span>
-          <span class="mf">0.009673474804303854</span><span class="p">,</span>
-          <span class="mf">0.007599905146155397</span><span class="p">,</span>
-          <span class="p">,</span>
-	        <span class="p">,</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.004570948731989492</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.006216969640322402</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.008197565423679522</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.009563574612830427</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.008999274832810742</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.009673474804303854</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.007599905146155397</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">	        </span><span class="p">,</span><span class="w"></span>
 
-        <span class="p">]</span>
-      <span class="p">]</span>
-    <span class="p">]</span>
-  <span class="p">]</span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -480,11 +481,11 @@ curl http://localhost:8080/predictions/resnet-18/2.0 -F <span class="s2">&quot;d
 </pre></div>
 </div>
 <p>The result is a json that gives you the predictions for the input json</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;predictions&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="mi">2</span>
-  <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;predictions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -502,26 +503,26 @@ curl http://localhost:8080/predictions/resnet-18/2.0 -F <span class="s2">&quot;d
 </pre></div>
 </div>
 <p>The result is a json that gives you the explanations for the input json</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;explanations&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">[</span>
-      <span class="p">[</span>
-        <span class="p">[</span>
-          <span class="mf">0.004570948731989492</span><span class="p">,</span>
-          <span class="mf">0.006216969640322402</span><span class="p">,</span>
-          <span class="mf">0.008197565423679522</span><span class="p">,</span>
-          <span class="mf">0.009563574612830427</span><span class="p">,</span>
-          <span class="mf">0.008999274832810742</span><span class="p">,</span>
-          <span class="mf">0.009673474804303854</span><span class="p">,</span>
-          <span class="mf">0.007599905146155397</span><span class="p">,</span>
-          <span class="p">,</span>
-          <span class="p">,</span>
-	        <span class="p">,</span>           
-        <span class="p">]</span>
-      <span class="p">]</span>
-    <span class="p">]</span>
-  <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;explanations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.004570948731989492</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.006216969640322402</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.008197565423679522</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.009563574612830427</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.008999274832810742</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.009673474804303854</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="mf">0.007599905146155397</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="p">,</span><span class="w"></span>
+<span class="w">	        </span><span class="p">,</span><span class="w">           </span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -612,8 +613,8 @@ curl http://localhost:8080/predictions/resnet-18/2.0 -F <span class="s2">&quot;d
          <script src="_static/jquery.js"></script>
          <script src="_static/underscore.js"></script>
          <script src="_static/doctools.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"></script>
+         <script src="_static/katex.min.js"></script>
+         <script src="_static/auto-render.min.js"></script>
          <script src="_static/katex_autorenderer.js"></script>
      
 

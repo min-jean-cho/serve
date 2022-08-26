@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -226,7 +226,7 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">1. TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Troubleshooting.html">2. Troubleshooting Guide</a></li>
@@ -241,12 +241,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../server.html">12. Running TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../torchserve_on_win_native.html">14. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../torchserve_on_wsl.html">15. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../use_cases.html">16. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../workflows.html">17. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use_cases.html">17. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflows.html">18. TorchServe Workflows</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
+<p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../inference_api.html">Inference API</a></li>
@@ -256,7 +257,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -336,9 +337,7 @@
              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
               
   <h1>Source code for ts.model_loader</h1><div class="highlight"><pre>
-<span></span>
-
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Model loader.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
@@ -346,13 +345,13 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
 
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span>
 
-<span class="kn">from</span> <span class="nn">ts.metrics.metrics_store</span> <span class="k">import</span> <span class="n">MetricsStore</span>
-<span class="kn">from</span> <span class="nn">ts.service</span> <span class="k">import</span> <span class="n">Service</span>
-<span class="kn">from</span> <span class="nn">.utils.util</span> <span class="k">import</span> <span class="n">list_classes_from_module</span>
+<span class="kn">from</span> <span class="nn">ts.metrics.metrics_store</span> <span class="kn">import</span> <span class="n">MetricsStore</span>
+<span class="kn">from</span> <span class="nn">ts.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">.utils.util</span> <span class="kn">import</span> <span class="n">list_classes_from_module</span>
 
 
 <div class="viewcode-block" id="ModelLoaderFactory"><a class="viewcode-back" href="../../api/ts.html#ts.model_loader.ModelLoaderFactory">[docs]</a><span class="k">class</span> <span class="nc">ModelLoaderFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -369,10 +368,20 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base Model Loader class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
 
 <div class="viewcode-block" id="ModelLoader.load"><a class="viewcode-back" href="../../api/ts.html#ts.model_loader.ModelLoader.load">[docs]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">gpu_id</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limit_max_image_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="p">,</span>
+        <span class="n">model_dir</span><span class="p">,</span>
+        <span class="n">handler</span><span class="p">,</span>
+        <span class="n">gpu_id</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">envelope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit_max_image_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load model from file.</span>
 
@@ -394,7 +403,16 @@
 <span class="sd">    TorchServe 1.0 Model Loader</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TsModelLoader.load"><a class="viewcode-back" href="../../api/ts.html#ts.model_loader.TsModelLoader.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">gpu_id</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limit_max_image_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="TsModelLoader.load"><a class="viewcode-back" href="../../api/ts.html#ts.model_loader.TsModelLoader.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="p">,</span>
+        <span class="n">model_dir</span><span class="p">,</span>
+        <span class="n">handler</span><span class="p">,</span>
+        <span class="n">gpu_id</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">envelope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit_max_image_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load TorchServe 1.0 model from file.</span>
 
@@ -423,13 +441,25 @@
             <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_default_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">module</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to load module </span><span class="si">{}</span><span class="s2">, make sure it is added to python path&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">handler</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to load module </span><span class="si">{}</span><span class="s2">, make sure it is added to python path&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">handler</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">function_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">function_name</span> <span class="o">=</span> <span class="s2">&quot;handle&quot;</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">function_name</span><span class="p">):</span>
             <span class="n">entry_point</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">function_name</span><span class="p">)</span>
-            <span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">,</span> <span class="n">manifest</span><span class="p">,</span> <span class="n">entry_point</span><span class="p">,</span> <span class="n">gpu_id</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">limit_max_image_pixels</span><span class="p">)</span>
+            <span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span>
+                <span class="n">model_name</span><span class="p">,</span>
+                <span class="n">model_dir</span><span class="p">,</span>
+                <span class="n">manifest</span><span class="p">,</span>
+                <span class="n">entry_point</span><span class="p">,</span>
+                <span class="n">gpu_id</span><span class="p">,</span>
+                <span class="n">batch_size</span><span class="p">,</span>
+                <span class="n">limit_max_image_pixels</span><span class="p">,</span>
+            <span class="p">)</span>
 
         <span class="n">envelope_class</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">envelope</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -437,7 +467,9 @@
 
         <span class="n">function_name</span> <span class="o">=</span> <span class="n">function_name</span> <span class="ow">or</span> <span class="s2">&quot;handle&quot;</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">function_name</span><span class="p">):</span>
-            <span class="n">entry_point</span><span class="p">,</span> <span class="n">initialize_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_function_entry_point</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">function_name</span><span class="p">)</span>
+            <span class="n">entry_point</span><span class="p">,</span> <span class="n">initialize_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_function_entry_point</span><span class="p">(</span>
+                <span class="n">module</span><span class="p">,</span> <span class="n">function_name</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">entry_point</span><span class="p">,</span> <span class="n">initialize_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_class_entry_point</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
 
@@ -445,7 +477,15 @@
             <span class="n">envelope_instance</span> <span class="o">=</span> <span class="n">envelope_class</span><span class="p">(</span><span class="n">entry_point</span><span class="p">)</span>
             <span class="n">entry_point</span> <span class="o">=</span> <span class="n">envelope_instance</span><span class="o">.</span><span class="n">handle</span>
 
-        <span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">,</span> <span class="n">manifest</span><span class="p">,</span> <span class="n">entry_point</span><span class="p">,</span> <span class="n">gpu_id</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">limit_max_image_pixels</span><span class="p">)</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span>
+            <span class="n">model_name</span><span class="p">,</span>
+            <span class="n">model_dir</span><span class="p">,</span>
+            <span class="n">manifest</span><span class="p">,</span>
+            <span class="n">entry_point</span><span class="p">,</span>
+            <span class="n">gpu_id</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">limit_max_image_pixels</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">service</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span>
         <span class="n">initialize_fn</span><span class="p">(</span><span class="n">service</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
 
@@ -463,12 +503,14 @@
 
     <span class="k">def</span> <span class="nf">_load_default_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
         <span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="s1">&#39;ts.torch_handler&#39;</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="s2">&quot;ts.torch_handler&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">module</span>
 
     <span class="k">def</span> <span class="nf">_load_default_envelope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envelope</span><span class="p">):</span>
         <span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">envelope</span><span class="p">)</span>
-        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="s1">&#39;ts.torch_handler.request_envelope&#39;</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span>
+            <span class="n">module_name</span><span class="p">,</span> <span class="s2">&quot;ts.torch_handler.request_envelope&quot;</span>
+        <span class="p">)</span>
         <span class="n">envelope_class</span> <span class="o">=</span> <span class="n">list_classes_from_module</span><span class="p">(</span><span class="n">module</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">envelope_class</span>
 
@@ -480,14 +522,19 @@
     <span class="k">def</span> <span class="nf">_get_class_entry_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
         <span class="n">model_class_definitions</span> <span class="o">=</span> <span class="n">list_classes_from_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_class_definitions</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected only one class in custom service code or a function entry point </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">model_class_definitions</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Expected only one class in custom service code or a function entry point </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">model_class_definitions</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="n">model_class</span> <span class="o">=</span> <span class="n">model_class_definitions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">model_service</span> <span class="o">=</span> <span class="n">model_class</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_service</span><span class="p">,</span> <span class="s2">&quot;handle&quot;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expect handle method in class </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">model_class</span><span class="p">)))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Expect handle method in class </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">model_class</span><span class="p">))</span>
+            <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">model_service</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">model_service</span><span class="o">.</span><span class="n">initialize</span></div>
 </pre></div>
@@ -542,8 +589,8 @@
          <script src="../../_static/jquery.js"></script>
          <script src="../../_static/underscore.js"></script>
          <script src="../../_static/doctools.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"></script>
+         <script src="../../_static/katex.min.js"></script>
+         <script src="../../_static/auto-render.min.js"></script>
          <script src="../../_static/katex_autorenderer.js"></script>
      
 

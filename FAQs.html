@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -227,7 +227,7 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">1. TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">2. Troubleshooting Guide</a></li>
@@ -242,12 +242,13 @@
 <li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">14. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">15. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases.html">16. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">17. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">17. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">18. TorchServe Workflows</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
+<p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inference_api.html">Inference API</a></li>
@@ -257,7 +258,7 @@
 <li class="toctree-l1"><a class="reference internal" href="workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -362,8 +363,8 @@
 <h3>How to use Torchserve in production?<a class="headerlink" href="#how-to-use-torchserve-in-production" title="Permalink to this headline">¶</a></h3>
 <p>Depending on your use case, you will be able to deploy torchserve in production using following mechanisms.</p>
 <blockquote>
-<div><p>Standalone deployment. Refer <a class="reference external" href="../docker/README">TorchServe docker documentation</a> or <a class="reference external" href="../docs/README">TorchServe documentation</a>
-Cloud based deployment. Refer <a class="reference external" href="../kubernetes/README">TorchServe kubernetes documentation</a> or <a class="reference external" href="../cloudformation/README">TorchServe cloudformation documentation</a></p>
+<div><p>Standalone deployment. Refer <a class="reference external" href="https://github.com/pytorch/serve/tree/master/docker#readme">TorchServe docker documentation</a> or <a class="reference external" href="https://github.com/pytorch/serve/tree/master/docs#readme">TorchServe documentation</a>
+Cloud based deployment. Refer <a class="reference external" href="https://github.com/pytorch/serve/tree/master/kubernetes#readme">TorchServe kubernetes documentation</a> or <a class="reference external" href="../cloudformation/README">TorchServe cloudformation documentation</a></p>
 </div></blockquote>
 </section>
 <section id="what-s-difference-between-torchserve-and-a-python-web-app-using-web-frameworks-like-flask-django">
@@ -373,7 +374,7 @@ Cloud based deployment. Refer <a class="reference external" href="../kubernetes/
 </section>
 <section id="are-there-any-sample-models-available">
 <h3>Are there any sample Models available?<a class="headerlink" href="#are-there-any-sample-models-available" title="Permalink to this headline">¶</a></h3>
-<p>Various models are provided in Torchserve out of the box. Checkout out Torchserve <a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/model_zoo.md">Model Zoo</a> for list of all available models. You can also check out the <a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples">examples</a> folder.</p>
+<p>Various models are provided in Torchserve out of the box. Checkout out Torchserve <a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/model_zoo">Model Zoo</a> for list of all available models. You can also check out the <a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples">examples</a> folder.</p>
 </section>
 <section id="does-torchserve-support-other-models-based-on-programming-languages-other-than-python">
 <h3>Does Torchserve support other models based on programming languages other than python?<a class="headerlink" href="#does-torchserve-support-other-models-based-on-programming-languages-other-than-python" title="Permalink to this headline">¶</a></h3>
@@ -388,9 +389,9 @@ Cloud based deployment. Refer <a class="reference external" href="../kubernetes/
 <h2>Deployment and config<a class="headerlink" href="#deployment-and-config" title="Permalink to this headline">¶</a></h2>
 <p>Relevant documents.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/configuration.md">Torchserve configuration</a></p></li>
+<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/configuration">Torchserve configuration</a></p></li>
 <li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/model_zoo.md#model-zoo">Model zoo</a></p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/snapshot.md">Snapshot</a></p></li>
+<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/snapshot">Snapshot</a></p></li>
 <li><p><a class="reference external" href="../docker/README">Docker</a></p></li>
 </ul>
 <section id="can-i-run-torchserve-apis-on-ports-other-than-the-default-8080-8081">
@@ -482,7 +483,7 @@ Refer <a class="reference external" href="default_handlers.md#torchserve-default
 <section id="is-it-possible-to-deploy-hugging-face-models">
 <h3>Is it possible to deploy Hugging Face models?<a class="headerlink" href="#is-it-possible-to-deploy-hugging-face-models" title="Permalink to this headline">¶</a></h3>
 <p>Yes, you can deploy Hugging Face models using a custom handler.
-Refer <a class="reference external" href="https://github.com/pytorch/serve/blob/master/examples/Huggingface_Transformers/README.md">HuggingFace_Transformers</a> for example.</p>
+Refer <a class="reference external" href="https://github.com/pytorch/serve/blob/master/examples/Huggingface_Transformers/README">HuggingFace_Transformers</a> for example.</p>
 </section>
 </section>
 <section id="model-archiver">
@@ -626,8 +627,8 @@ Note: For v4 type replace <code class="docutils literal notranslate"><span class
          <script src="_static/jquery.js"></script>
          <script src="_static/underscore.js"></script>
          <script src="_static/doctools.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"></script>
+         <script src="_static/katex.min.js"></script>
+         <script src="_static/auto-render.min.js"></script>
          <script src="_static/katex_autorenderer.js"></script>
      
 

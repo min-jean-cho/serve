@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -227,7 +227,7 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">1. TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">2. Troubleshooting Guide</a></li>
@@ -242,12 +242,13 @@
 <li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">14. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">15. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases.html">16. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">17. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">17. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">18. TorchServe Workflows</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
+<p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inference_api.html">Inference API</a></li>
@@ -257,7 +258,7 @@
 <li class="toctree-l1"><a class="reference internal" href="workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -355,7 +356,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>For GPU with Cuda 10.2. Options are <code class="docutils literal notranslate"><span class="pre">cu92</span></code>, <code class="docutils literal notranslate"><span class="pre">cu101</span></code>, <code class="docutils literal notranslate"><span class="pre">cu102</span></code>, <code class="docutils literal notranslate"><span class="pre">cu111</span></code>, <code class="docutils literal notranslate"><span class="pre">cu113</span></code></p>
+<li><p>For GPU with Cuda 10.2. Options are <code class="docutils literal notranslate"><span class="pre">cu92</span></code>, <code class="docutils literal notranslate"><span class="pre">cu101</span></code>, <code class="docutils literal notranslate"><span class="pre">cu102</span></code>, <code class="docutils literal notranslate"><span class="pre">cu111</span></code>, <code class="docutils literal notranslate"><span class="pre">cu113</span></code>, <code class="docutils literal notranslate"><span class="pre">cu116</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python ./ts_scripts/install_dependencies.py --cuda<span class="o">=</span>cu102
 </pre></div>
 </div>
@@ -456,23 +457,23 @@ You can also create model stores to store your archived models.</p>
 </pre></div>
 </div>
 <p>Which will return the following JSON object</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;tiger_cat&quot;</span><span class="p">:</span> <span class="mf">0.46933549642562866</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;tabby&quot;</span><span class="p">:</span> <span class="mf">0.4633878469467163</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;Egyptian_cat&quot;</span><span class="p">:</span> <span class="mf">0.06456148624420166</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;lynx&quot;</span><span class="p">:</span> <span class="mf">0.0012828214094042778</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;plastic_bag&quot;</span><span class="p">:</span> <span class="mf">0.00023323034110944718</span>
-  <span class="p">}</span>
-<span class="p">]</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tiger_cat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.46933549642562866</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tabby&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4633878469467163</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;Egyptian_cat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.06456148624420166</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;lynx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0012828214094042778</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;plastic_bag&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00023323034110944718</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">]</span><span class="w"></span>
 </pre></div>
 </div>
 <p>All interactions with the endpoint will be logged in the <code class="docutils literal notranslate"><span class="pre">logs/</span></code> directory, so make sure to check it out!</p>
@@ -592,8 +593,8 @@ You can also create model stores to store your archived models.</p>
          <script src="_static/jquery.js"></script>
          <script src="_static/underscore.js"></script>
          <script src="_static/doctools.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"></script>
+         <script src="_static/katex.min.js"></script>
+         <script src="_static/auto-render.min.js"></script>
          <script src="_static/katex_autorenderer.js"></script>
      
 

@@ -10,7 +10,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; PyTorch/Serve master documentation</title>
+  <title>14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36 &mdash; PyTorch/Serve master documentation</title>
   
 
   
@@ -31,11 +31,11 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="14. TorchServe on Windows" href="../torchserve_on_win_native.html" />
+    <link rel="next" title="15. TorchServe on Windows" href="../torchserve_on_win_native.html" />
     <link rel="prev" title="13. TorchServe model snapshot" href="../snapshot.html" />
   <!-- Google Analytics -->
   
@@ -229,8 +229,8 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">1. TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting.html">2. Troubleshooting Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_inference_with_ts.html">3. Batch Inference with TorchServe</a></li>
@@ -244,12 +244,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../server.html">12. Running TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_win_native.html">14. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_wsl.html">15. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases.html">16. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflows.html">17. TorchServe Workflows</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases.html">17. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflows.html">18. TorchServe Workflows</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
+<p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../inference_api.html">Inference API</a></li>
@@ -259,7 +260,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -308,7 +309,7 @@
       </li>
 
         
-      <li>&lt;no title&gt;</li>
+      <li><span class="section-number">14. </span>cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</li>
     
     
       <li class="pytorch-breadcrumbs-aside">
@@ -340,12 +341,20 @@
             <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
               
-  <p>sphinx==3.0.3
+  <section id="cf-https-github-com-ryanfox-sphinx-markdown-tables-issues-36">
+<h1><span class="section-number">14. </span>cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36<a class="headerlink" href="#cf-https-github-com-ryanfox-sphinx-markdown-tables-issues-36" title="Permalink to this headline">¶</a></h1>
+<p>markdown&lt;3.4.0
+sphinx==4.0.3
+katex
 recommonmark==0.6.0
--e git+git://github.com/pytorch/pytorch_sphinx_theme.git#egg=pytorch_sphinx_theme
 sphinxcontrib.katex
 torch
-sphinx-markdown-tables</p>
+sphinx-markdown-tables==0.0.15
+torchserve
+torch-model-archiver
+torch-workflow-archiver
+-e git+https://github.com/pytorch/pytorch_sphinx_theme.git#egg=pytorch_sphinx_theme</p>
+</section>
 
 
              </article>
@@ -355,7 +364,7 @@ sphinx-markdown-tables</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../torchserve_on_win_native.html" class="btn btn-neutral float-right" title="14. TorchServe on Windows" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+        <a href="../torchserve_on_win_native.html" class="btn btn-neutral float-right" title="15. TorchServe on Windows" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
       
       
         <a href="../snapshot.html" class="btn btn-neutral" title="13. TorchServe model snapshot" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
@@ -389,7 +398,8 @@ sphinx-markdown-tables</p>
         <div class="pytorch-content-right" id="pytorch-content-right">
           <div class="pytorch-right-menu" id="pytorch-right-menu">
             <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
-              <ul class="simple">
+              <ul>
+<li><a class="reference internal" href="#">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
 </ul>
 
             </div>
@@ -409,8 +419,8 @@ sphinx-markdown-tables</p>
          <script src="../_static/jquery.js"></script>
          <script src="../_static/underscore.js"></script>
          <script src="../_static/doctools.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"></script>
+         <script src="../_static/katex.min.js"></script>
+         <script src="../_static/auto-render.min.js"></script>
          <script src="../_static/katex_autorenderer.js"></script>
      
 
