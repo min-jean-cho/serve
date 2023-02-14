@@ -10,7 +10,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TorchServe &mdash; PyTorch/Serve master documentation</title>
+  <title>GitHub Actions for TorchServe &mdash; PyTorch/Serve master documentation</title>
   
 
   
@@ -323,13 +323,13 @@
       </li>
 
         
-      <li>TorchServe</li>
+      <li>GitHub Actions for TorchServe</li>
     
     
       <li class="pytorch-breadcrumbs-aside">
         
             
-            <a href="_sources/README.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
+            <a href="_sources/github_actions.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
           
         
       </li>
@@ -355,68 +355,138 @@
             <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
               
-  <section id="torchserve">
-<h1>TorchServe<a class="headerlink" href="#torchserve" title="Permalink to this headline">¶</a></h1>
-<p>TorchServe is a performant, flexible and easy to use tool for serving PyTorch eager mode and torchscripted models.</p>
-<section id="basic-features">
-<h2>Basic Features<a class="headerlink" href="#basic-features" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/README.md#serve-a-model">Serving Quick Start</a> - Basic server usage tutorial</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/tree/master/model-archiver#creating-a-model-archive">Model Archive Quick Start</a> - Tutorial that shows you how to package a model archive file.</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/README.md#install-torchserve">Installation</a> - Installation procedures</p></li>
-<li><p><a class="reference internal" href="server.html"><span class="doc">Serving Models</span></a> - Explains how to use TorchServe</p></li>
-<li><p><a class="reference internal" href="rest_api.html"><span class="doc">REST API</span></a> - Specification on the API endpoint for TorchServe</p></li>
-<li><p><a class="reference internal" href="grpc_api.html"><span class="doc">gRPC API</span></a> - TorchServe supports gRPC APIs for both inference and management calls</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/tree/master/model-archiver#torch-model-archiver-for-torchserve">Packaging Model Archive</a> - Explains how to package model archive file, use <code class="docutils literal notranslate"><span class="pre">model-archiver</span></code>.</p></li>
-<li><p><a class="reference internal" href="inference_api.html"><span class="doc">Inference API</span></a> - How to check for the health of a deployed model and get inferences</p></li>
-<li><p><a class="reference internal" href="management_api.html"><span class="doc">Management API</span></a> - How to manage and scale models</p></li>
-<li><p><a class="reference internal" href="logging.html"><span class="doc">Logging</span></a> - How to configure logging</p></li>
-<li><p><a class="reference internal" href="metrics.html"><span class="doc">Metrics</span></a> - How to configure metrics</p></li>
-<li><p><a class="reference internal" href="metrics_api.html"><span class="doc">Prometheus and Grafana metrics</span></a> - How to configure metrics API with Prometheus formatted metrics in a Grafana dashboard</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/examples/captum/Captum_visualization_for_bert.ipynb">Captum Explanations</a> - Built in support for Captum explanations for both text and images</p></li>
-<li><p><a class="reference internal" href="batch_inference_with_ts.html"><span class="doc">Batch inference with TorchServe</span></a> - How to create and serve a model with batch inference in TorchServe</p></li>
-<li><p><a class="reference internal" href="workflows.html"><span class="doc">Workflows</span></a> - How to create workflows to compose Pytorch models and Python functions in sequential and parallel pipelines</p></li>
-</ul>
-</section>
-<section id="default-handlers">
-<h2>Default Handlers<a class="headerlink" href="#default-handlers" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/torch_handler/image_classifier.py">Image Classifier</a> - This handler takes an image and returns the name of object in that image</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/torch_handler/text_classifier.py">Text Classifier</a> - This handler takes a text (string) as input and returns the classification text based on the model vocabulary</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/torch_handler/object_detector.py">Object Detector</a> - This handler takes an image and returns list of detected classes and bounding boxes respectively</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/torch_handler/image_segmenter.py">Image Segmenter</a>- This handler takes an image and returns output shape as [CL H W], CL - number of classes, H - height and W - width</p></li>
-</ul>
-</section>
-<section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/examples/Huggingface_Transformers/Transformer_handler_generalized.py">HuggingFace Language Model</a> - This handler takes an input sentence and can return sequence classifications, token classifications or Q&amp;A answers</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/examples/MMF-activity-recognition/handler.py">Multi Modal Framework</a> - Build and deploy a classifier that combines text, audio and video input data</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples/Workflows/nmt_transformers_pipeline">Dual Translation Workflow</a> -</p></li>
-<li><p><a class="reference internal" href="model_zoo.html"><span class="doc">Model Zoo</span></a> - List of pre-trained model archives ready to be served for inference with TorchServe.</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples">Examples</a> - Many examples of how to package and deploy models with TorchServe</p>
+  <section id="github-actions-for-torchserve">
+<h1>GitHub Actions for TorchServe<a class="headerlink" href="#github-actions-for-torchserve" title="Permalink to this headline">¶</a></h1>
+<section id="steps-to-create-github-actions">
+<h2>Steps to create github actions<a class="headerlink" href="#steps-to-create-github-actions" title="Permalink to this headline">¶</a></h2>
+<ol>
+<li><p>Create a new workflow file under <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code></p></li>
+<li><p>Specify the name of the workflow</p>
+<p><code class="docutils literal notranslate"><span class="pre">name:</span> <span class="pre">Run</span> <span class="pre">Regression</span> <span class="pre">Tests</span> <span class="pre">on</span> <span class="pre">CPU</span></code></p>
+</li>
+<li><p>Specify when the workflow should trigger. Some common examples are as follows</p>
 <ul>
-<li><p><a class="reference external" href="../examples/README.md#torchserve-internals">TorchServe Internals</a></p></li>
-<li><p><a class="reference external" href="../examples/README.md#torchserve-integrations">TorchServe Integrations</a></p></li>
-<li><p><a class="reference external" href="../examples/README.md#usecases">TorchServe UseCases</a></p></li>
+<li><p>Trigger manually</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on</span><span class="p">:</span> <span class="n">workflow_dispatch</span>
+</pre></div>
+</div>
+</li>
+<li><p>Trigger on push to a branch</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on</span><span class="p">:</span>
+    <span class="n">push</span><span class="p">:</span>
+        <span class="n">branches</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">master</span>
+</pre></div>
+</div>
+</li>
+<li><p>Trigger on pull request</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on</span><span class="p">:</span>
+  <span class="n">pull_request</span><span class="p">:</span>
+    <span class="n">branches</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">master</span>
+</pre></div>
+</div>
+</li>
+<li><p>Trigger nightly</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on</span><span class="p">:</span>
+    <span class="c1"># run every day at 2:15am</span>
+    <span class="n">schedule</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">cron</span><span class="p">:</span>  <span class="s1">&#39;15 02 * * *&#39;</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples/Workflows">Workflow Examples</a> - Examples of how to compose models in a workflow with TorchServe</p></li>
-</ul>
-</section>
-<section id="advanced-features">
-<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Permalink to this headline">¶</a></h2>
+<li><p>Start defining the job to be run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jobs</span><span class="p">:</span>
+    <span class="n">regression</span><span class="o">-</span><span class="n">cpu</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>Everything after this is aligned to <code class="docutils literal notranslate"><span class="pre">jobs</span></code></p>
+</li>
+<li><p>Define where the job is to run</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="configuration.html"><span class="doc">Advanced configuration</span></a> - Describes advanced TorchServe configurations.</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/use_cases.md#serve-models-for-ab-testing">A/B test models</a> - A/B test your models for regressions before shipping them to production</p></li>
-<li><p><a class="reference internal" href="custom_service.html"><span class="doc">Custom Service</span></a> - Describes how to develop custom inference services.</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/management_api.md#encrypted-model-serving">Encrypted model serving</a> - S3 server side model encryption via KMS</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/plugins/docs/ddb_endpoint">Snapshot serialization</a> - Serialize model artifacts to AWS Dynamo DB</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/tree/master/benchmarks#torchserve-model-server-benchmarking">Benchmarking and Profiling</a> - Use JMeter or Apache Bench to benchmark your models and TorchServe itself</p></li>
-<li><p><a class="reference external" href="https://github.com/pytorch/serve/blob/master/kubernetes/README.md#torchserve-on-kubernetes">TorchServe on Kubernetes</a> -  Demonstrates a Torchserve deployment in Kubernetes using Helm Chart supported in both Azure Kubernetes Service and Google Kubernetes service</p></li>
-<li><p><a class="reference external" href="https://github.com/mlflow/mlflow-torchserve">mlflow-torchserve</a> - Deploy mlflow pipeline models into TorchServe</p></li>
-<li><p><a class="reference external" href="https://github.com/kubeflow/pipelines/tree/master/samples/contrib/pytorch-samples">Kubeflow pipelines</a> - Kubeflow pipelines and Google Vertex AI Managed pipelines</p></li>
+<li><p>Specify which OS/machine to be run on</p></li>
 </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="p">:</span> <span class="n">ubuntu</span><span class="o">-</span><span class="mf">20.04</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">-</span><span class="n">hosted</span><span class="p">,</span> <span class="n">ci</span><span class="o">-</span><span class="n">gpu</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Specify in terms of a matrix. This would run on <code class="docutils literal notranslate"><span class="pre">ubuntu-20.04</span></code> and <code class="docutils literal notranslate"><span class="pre">macOS-latest</span></code>. <code class="docutils literal notranslate"><span class="pre">fail-fast</span></code> indicates to fail the job when the first one fails</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    runs-on: ${{ matrix.os }}
+    strategy:
+    fail-fast: false
+    matrix:
+        os: [ubuntu-20.04, macOS-latest]
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>This would create 2 runs. One run on <code class="docutils literal notranslate"><span class="pre">ci-gpu</span></code> with CUDA 11.6 and a second run on <code class="docutils literal notranslate"><span class="pre">ci-gpu</span></code> with CUDA 11.7</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">-</span><span class="n">hosted</span><span class="p">,</span> <span class="n">ci</span><span class="o">-</span><span class="n">gpu</span><span class="p">]</span>
+        <span class="n">strategy</span><span class="p">:</span>
+        <span class="n">fail</span><span class="o">-</span><span class="n">fast</span><span class="p">:</span> <span class="n">false</span>
+        <span class="n">matrix</span><span class="p">:</span>
+            <span class="n">cuda</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;cu116&quot;</span><span class="p">,</span> <span class="s2">&quot;cu117&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>Specify the commands to be executed for the run</p>
+<ol class="simple">
+<li><p>Setup python</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Setup</span> <span class="n">Python</span> <span class="mf">3.8</span>
+        <span class="n">uses</span><span class="p">:</span> <span class="n">actions</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">python</span><span class="nd">@v3</span>
+        <span class="k">with</span><span class="p">:</span>
+        <span class="n">python</span><span class="o">-</span><span class="n">version</span><span class="p">:</span> <span class="mf">3.8</span>
+        <span class="n">architecture</span><span class="p">:</span> <span class="n">x84</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Setup Java</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Setup</span> <span class="n">Java</span> <span class="mi">17</span>
+        <span class="n">uses</span><span class="p">:</span> <span class="n">actions</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">java</span><span class="nd">@v3</span>
+        <span class="k">with</span><span class="p">:</span>
+        <span class="n">distribution</span><span class="p">:</span> <span class="s1">&#39;zulu&#39;</span>
+        <span class="n">java</span><span class="o">-</span><span class="n">version</span><span class="p">:</span> <span class="s1">&#39;17&#39;</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Checkout TorchServe</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Checkout</span> <span class="n">TorchServe</span>
+        <span class="n">uses</span><span class="p">:</span> <span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="nd">@v3</span>
+</pre></div>
+</div>
+<ol>
+<li><p>Specify the shell commands/scripts to be run. Examples:</p>
+<ol class="simple">
+<li></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Install</span> <span class="n">dependencies</span>
+        <span class="n">run</span><span class="p">:</span> <span class="n">python</span> <span class="n">ts_scripts</span><span class="o">/</span><span class="n">install_dependencies</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">environment</span><span class="o">=</span><span class="n">dev</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Upload</span> <span class="n">codecov</span>
+        <span class="k">if</span><span class="p">:</span> <span class="n">matrix</span><span class="o">.</span><span class="n">os</span> <span class="o">==</span> <span class="s1">&#39;ubuntu-20.04&#39;</span>
+        <span class="n">run</span> <span class="p">:</span> <span class="o">|</span>
+        <span class="n">curl</span> <span class="o">-</span><span class="n">Os</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">uploader</span><span class="o">.</span><span class="n">codecov</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">codecov</span>
+        <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">codecov</span>
+        <span class="o">./</span><span class="n">codecov</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
 </section>
 </section>
 
@@ -454,11 +524,8 @@
           <div class="pytorch-right-menu" id="pytorch-right-menu">
             <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
               <ul>
-<li><a class="reference internal" href="#">TorchServe</a><ul>
-<li><a class="reference internal" href="#basic-features">Basic Features</a></li>
-<li><a class="reference internal" href="#default-handlers">Default Handlers</a></li>
-<li><a class="reference internal" href="#examples">Examples</a></li>
-<li><a class="reference internal" href="#advanced-features">Advanced Features</a></li>
+<li><a class="reference internal" href="#">GitHub Actions for TorchServe</a><ul>
+<li><a class="reference internal" href="#steps-to-create-github-actions">Steps to create github actions</a></li>
 </ul>
 </li>
 </ul>
