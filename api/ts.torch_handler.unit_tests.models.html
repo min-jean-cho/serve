@@ -259,12 +259,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">10. Model Zoo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../server.html">12. Running TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases.html">17. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflows.html">18. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mps.html">13. Running TorchServe with NVIDIA MPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../snapshot.html">14. TorchServe model snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sphinx/requirements.html">15. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_win_native.html">16. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../torchserve_on_wsl.html">17. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases.html">18. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflows.html">19. TorchServe Workflows</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
@@ -375,8 +376,8 @@
 <p>Simple feed-forward model used only to test BaseHandler</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ts.torch_handler.unit_tests.models.base_model.ArgmaxModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ts.torch_handler.unit_tests.models.base_model.</span></span><span class="sig-name descname"><span class="pre">ArgmaxModel</span></span><a class="reference internal" href="../_modules/ts/torch_handler/unit_tests/models/base_model.html#ArgmaxModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ts.torch_handler.unit_tests.models.base_model.ArgmaxModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v1.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ts.torch_handler.unit_tests.models.base_model.</span></span><span class="sig-name descname"><span class="pre">ArgmaxModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ts/torch_handler/unit_tests/models/base_model.html#ArgmaxModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ts.torch_handler.unit_tests.models.base_model.ArgmaxModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ts.torch_handler.unit_tests.models.base_model.ArgmaxModel.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ts/torch_handler/unit_tests/models/base_model.html#ArgmaxModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ts.torch_handler.unit_tests.models.base_model.ArgmaxModel.forward" title="Permalink to this definition">¶</a></dt>

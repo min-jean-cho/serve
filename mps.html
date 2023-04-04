@@ -10,7 +10,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. Code Coverage &mdash; PyTorch/Serve master documentation</title>
+  <title>13. Running TorchServe with NVIDIA MPS &mdash; PyTorch/Serve master documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5. Advanced configuration" href="configuration.html" />
-    <link rel="prev" title="3. Batch Inference with TorchServe" href="batch_inference_with_ts.html" />
+    <link rel="next" title="14. TorchServe model snapshot" href="snapshot.html" />
+    <link rel="prev" title="12. Running TorchServe" href="server.html" />
   <!-- Google Analytics -->
   
   <!-- End Google Analytics -->
@@ -250,7 +250,7 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">1. TorchServe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">2. Troubleshooting Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch_inference_with_ts.html">3. Batch Inference with TorchServe</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Code Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_coverage.html">4. Code Coverage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">5. Advanced configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_service.html">6. Custom Service</a></li>
 <li class="toctree-l1"><a class="reference internal" href="default_handlers.html">7. TorchServe default inference handlers</a></li>
@@ -259,7 +259,7 @@
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">10. Model Zoo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mps.html">13. Running TorchServe with NVIDIA MPS</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">13. Running TorchServe with NVIDIA MPS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="snapshot.html">14. TorchServe model snapshot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">15. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">16. TorchServe on Windows</a></li>
@@ -326,13 +326,13 @@
       </li>
 
         
-      <li><span class="section-number">4. </span>Code Coverage</li>
+      <li><span class="section-number">13. </span>Running TorchServe with NVIDIA MPS</li>
     
     
       <li class="pytorch-breadcrumbs-aside">
         
             
-            <a href="_sources/code_coverage.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
+            <a href="_sources/mps.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
           
         
       </li>
@@ -358,109 +358,91 @@
             <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
               
-  <section id="code-coverage">
-<h1><span class="section-number">4. </span>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline">¶</a></h1>
-<section id="to-check-branch-stability-run-the-sanity-suite-as-follows">
-<h2><span class="section-number">4.1. </span>To check branch stability run the sanity suite as follows<a class="headerlink" href="#to-check-branch-stability-run-the-sanity-suite-as-follows" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li><p>Install dependencies (if not already installed)
-For CPU:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>ts_scripts/install_dependencies.py<span class="w"> </span>--environment<span class="o">=</span>dev
-</pre></div>
-</div>
-<p>For GPU</p>
+  <section id="running-torchserve-with-nvidia-mps">
+<h1><span class="section-number">13. </span>Running TorchServe with NVIDIA MPS<a class="headerlink" href="#running-torchserve-with-nvidia-mps" title="Permalink to this headline">¶</a></h1>
+<p>In order to deploy ML models, TorchServe spins up each worker in a separate processes, thus isolating each worker from the others.
+Each process creates its own CUDA context to execute its kernels and access the allocated memory.</p>
+<p>While NVIDIA GPUs in their default setting allow multiple processes to run CUDA kernels on a single device it involves the following drawback:</p>
 <ul class="simple">
-<li><p>Install dependencies (if not already installed)</p></li>
+<li><p>The execution of the kernels is generally serialized</p></li>
+<li><p>Each processes creates its own CUDA context which occupies additional GPU memory</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>ts_scripts/install_dependencies.py<span class="w"> </span>--environment<span class="o">=</span>dev<span class="w"> </span>--cuda<span class="o">=</span>cu102
-</pre></div>
-</div>
-<blockquote>
-<div><p>Supported cuda versions as cu118, cu117, cu116, cu113, cu111, cu102, cu101, cu92</p>
-</div></blockquote>
-</li>
-<li><p>Execute sanity suite</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>./torchserve_sanity.py
-</pre></div>
-</div>
-</li>
-</ul>
-</section>
-<section id="to-run-frontend-build-suite-run-following-command">
-<h2><span class="section-number">4.2. </span>To run frontend build suite run following command<a class="headerlink" href="#to-run-frontend-build-suite-run-following-command" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>frontend/gradlew<span class="w"> </span>-p<span class="w"> </span>frontend<span class="w"> </span>clean<span class="w"> </span>build
-</pre></div>
-</div>
-<p>TorchServe frontend build suite consists of :</p>
+<p>For these scenarios NVIDIA offers the Multi-Process Service (MPS) which:</p>
 <ul class="simple">
-<li><p>checkstyle</p></li>
-<li><p>findbugs</p></li>
-<li><p>PMD</p></li>
-<li><p>UT</p></li>
+<li><p>Allows multiple processes to share the same CUDA context on the same GPU</p></li>
+<li><p>Run their kernels in a parallel fashion</p></li>
 </ul>
-<p>The reports are generated at following path : <code class="docutils literal notranslate"><span class="pre">frontend/server/build/reports</span></code></p>
-</section>
-<section id="to-run-backend-pytest-suite-run-following-command">
-<h2><span class="section-number">4.3. </span>To run backend pytest suite run following command<a class="headerlink" href="#to-run-backend-pytest-suite-run-following-command" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>--cov-report<span class="w"> </span>html:htmlcov<span class="w"> </span>--cov<span class="o">=</span>ts/<span class="w"> </span>ts/tests/unit_tests/
-</pre></div>
-</div>
-<p>The reports are generated at following path : <code class="docutils literal notranslate"><span class="pre">htmlcov/</span></code></p>
-</section>
-<section id="to-run-python-linting-on-ts-package-run-following-command">
-<h2><span class="section-number">4.4. </span>To run python linting on <code class="docutils literal notranslate"><span class="pre">ts</span></code> package run following command<a class="headerlink" href="#to-run-python-linting-on-ts-package-run-following-command" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pylint<span class="w"> </span>-rn<span class="w"> </span>--rcfile<span class="o">=</span>./ts/tests/pylintrc<span class="w"> </span>ts/.
-</pre></div>
-</div>
-</section>
-<section id="to-run-pytest-suite-on-model-archiver-run-following-command">
-<h2><span class="section-number">4.5. </span>To run pytest suite on model-archiver run following command<a class="headerlink" href="#to-run-pytest-suite-on-model-archiver-run-following-command" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>model-archiver
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>--cov-report<span class="w"> </span>html:htmlcov_ut<span class="w"> </span>--cov<span class="o">=</span>model_archiver/<span class="w"> </span>model_archiver/tests/unit_tests/
-</pre></div>
-</div>
-<p>The reports are generated at following path : <code class="docutils literal notranslate"><span class="pre">model-archiver/htmlcov_ut/</span></code></p>
-</section>
-<section id="to-run-it-suite-on-model-archiver-run-following-command">
-<h2><span class="section-number">4.6. </span>To run IT suite on model-archiver run following command<a class="headerlink" href="#to-run-it-suite-on-model-archiver-run-following-command" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>model-archiver
-pip<span class="w"> </span>install<span class="w"> </span>.
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>--cov-report<span class="w"> </span>html:htmlcov_it<span class="w"> </span>--cov<span class="o">=</span>model_archiver/<span class="w"> </span>model_archiver/tests/integ_tests/
-</pre></div>
-</div>
-<p>The reports are generated at following path : <code class="docutils literal notranslate"><span class="pre">model-archiver/htmlcov_it/</span></code></p>
-<p><strong>Note</strong>: All the above commands needs to be excuted from serve home</p>
-</section>
-<section id="to-run-the-markdown-link-check-run-following-command">
-<h2><span class="section-number">4.7. </span>To run the markdown link check run following command<a class="headerlink" href="#to-run-the-markdown-link-check-run-following-command" title="Permalink to this headline">¶</a></h2>
-<section id="install-markdown-link-checker-dependencies">
-<h3><span class="section-number">4.7.1. </span>Install markdown link checker dependencies<a class="headerlink" href="#install-markdown-link-checker-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>Run following commands to install node and <a class="reference external" href="https://github.com/tcort/markdown-link-check/"><code class="docutils literal notranslate"><span class="pre">markdown-link-check</span></code></a> npm package.</p>
+<p>This can result in:</p>
 <ul class="simple">
-<li><p>Install node</p></li>
+<li><p>Increased performance when using multiple workers on the same GPU</p></li>
+<li><p>Decreased GPU memory utilization due to the shared context</p></li>
 </ul>
-<p>For Linux :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nodejs</span><span class="o">-</span><span class="n">dev</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">npm</span>
+<p>To leverage the benefits of NVIDIA MPS we need to start the MPS daemon with the following commands before starting up TorchServe itself.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nvidia</span><span class="o">-</span><span class="n">smi</span> <span class="o">-</span><span class="n">c</span> <span class="mi">3</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cuda</span><span class="o">-</span><span class="n">mps</span><span class="o">-</span><span class="n">control</span> <span class="o">-</span><span class="n">d</span>
 </pre></div>
 </div>
-<p>For Mac :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">node</span>
-<span class="n">brew</span> <span class="n">install</span> <span class="n">npm</span>
+<p>The first command enables the exclusive processing mode for the GPU allowing only one process (the MPS daemon) to utilize it.
+The second command starts the MPS daemon itself.
+To shutdown the daemon we can execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="n">quit</span> <span class="o">|</span> <span class="n">nvidia</span><span class="o">-</span><span class="n">cuda</span><span class="o">-</span><span class="n">mps</span><span class="o">-</span><span class="n">control</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>Install markdown</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">n</span>
-<span class="n">sudo</span> <span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">markdown</span><span class="o">-</span><span class="n">link</span><span class="o">-</span><span class="n">check</span>
+<p>For more details on MPS please refer to <a class="reference external" href="https://docs.nvidia.com/deploy/mps/index.html">NVIDIA’s MPS documentation</a>.
+It should be noted that MPS only allows 48 processes (for Volta GPUs) to connect to the daemon due limited hardware resources.
+Adding more clients/workers (to the same GPU) will lead to a failure.</p>
+<section id="benchmarks">
+<h2><span class="section-number">13.1. </span>Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this headline">¶</a></h2>
+<p>To show the performance of TorchServe with activated MPS and help to the decision in enabling MPS for your deployment or not we will perform some benchmarks with representative workloads.</p>
+<p>Primarily, we want to investigate how the throughput of a worker evolves with activated MPS for different operation points.
+As an example work load for our benchmark we select the <a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples/Huggingface_Transformers#sequence-classification">HuggingFace Transformers Sequence Classification example</a>.
+We perform the benchmark on a g4dn.4xlarge as well as a p3.2xlarge instance on AWS.
+Both instance types provide one GPU per instance which will result in multiple workers to be scheduled on the same GPU.
+For the benchmark we concentrate on the model throughput as measured by the <a class="reference external" href="https://github.com/pytorch/serve/tree/master/benchmarks/benchmark-ab.py">benchmark-ab.py</a> tool.</p>
+<p>First, we measure the throughput of a single worker for different batch sizes as it will show us at which point the compute resources of the GPU are fully occupied.
+Second, we measure the throughput with two deployed workers for the batch sizes where we expect the GPUs to have still some resources left over to share.
+For each benchmark we perform five runs and take the median over the runs.</p>
+<p>We use the following config.json for the benchmark, only overwriting the number of workers and the batch size accordingly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;/home/ubuntu/serve/examples/Huggingface_Transformers/model_store/BERTSeqClassification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;requests&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="s2">&quot;concurrency&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/ubuntu/serve/examples/Huggingface_Transformers/Seq_classification_artifacts/sample_text_captum_input.txt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;workers&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>Execute this command to run markdown link checks locally. It will check broken links in all files with “.md” extension in current directory recursively.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>for i in **/*.md; do markdown-link-check $i --config link_check_config.json; done;
-</pre></div>
-</div>
+<p>Please note that we set the concurrency level to 600 which will make sure that the batch aggregation inside TorchServe fills up the batches to the maximum batch size. But concurrently this will skew the latency measurements as many requests will be waiting in the queue to be processed. We will therefore neglect the latency measurements in the following.</p>
+<section id="g4-instance">
+<h3><span class="section-number">13.1.1. </span>G4 Instance<a class="headerlink" href="#g4-instance" title="Permalink to this headline">¶</a></h3>
+<p>We first perform the single worker benchmark for the G4 instance.
+In the figure below we see that up to a batch size of four we see a steady increase of the throughput over the batch size.</p>
+<p><img alt="G4 benchmark, single worker" src="_images/mps_g4_single.png" /></p>
+<p>Next, we increase the number of workers to two in order to compare the throughput with and without MPS running.
+To enable MPS for the second set of runs we first set the exclusive processing mode for the GPU and then start the MPS daemon as shown above.</p>
+<p>We select the batch size between one and eight according to our previous findings.
+In the figure we can see that the performance in terms of throughput can be better in case of batch size 1 and 8 (up to +18%) while it can be worse for others (-11%).
+An interpretation of this result could be that the G4 instance has not many resources to share when we run a BERT model in one of the workers.</p>
+<p><img alt="G4 benchmark, two workers" src="_images/mps_g4_two_worker.png" /></p>
 </section>
+<section id="p3-instance">
+<h3><span class="section-number">13.1.2. </span>P3 instance<a class="headerlink" href="#p3-instance" title="Permalink to this headline">¶</a></h3>
+<p>Next, we will run the same experiment with the bigger p3.2xlarge instance.
+With a single worker we get the following throughput values:</p>
+<p><img alt="P3 benchmark, single worker" src="_images/mps_p3_single.png" /></p>
+<p>We can see that the throughput steady increases but for a batch size over eight we see diminishing returns.
+Finally, we deploy two workers on the P3 instance and compare running them with and without MPS.
+We can see that for batch size between 1 and 32 the throughput is consistently higher (up to +25%) for MPS enabled with the exception of batch size 16.</p>
+<p><img alt="P3 benchmark, two workers" src="_images/mps_p3_two_worker.png" /></p>
+</section>
+</section>
+<section id="summary">
+<h2><span class="section-number">13.2. </span>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section we saw that by enabling MPS for two workers running the same model we receive mixed results.
+For the smaller G4 instance we only saw benefits in certain operation points while we saw more consistent improvements for the bigger P3 instance.
+This suggests that the benefit in terms of throughput for running a deployment with MPS are highly workload and environment dependent and need to be determined for specific situations using appropriate benchmarks and tools.
+It should be noted that the previous benchmark solely focused on throughput and neglected latency and memory footprint.
+As using MPS will only create a single CUDA context more workers can be packed to the same GPU which needs to be considered as well in the according scenarios.</p>
 </section>
 </section>
 
@@ -472,10 +454,10 @@ python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> <
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="configuration.html" class="btn btn-neutral float-right" title="5. Advanced configuration" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
+        <a href="snapshot.html" class="btn btn-neutral float-right" title="14. TorchServe model snapshot" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
       
       
-        <a href="batch_inference_with_ts.html" class="btn btn-neutral" title="3. Batch Inference with TorchServe" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+        <a href="server.html" class="btn btn-neutral" title="12. Running TorchServe" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
       
     </div>
   
@@ -507,17 +489,13 @@ python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> <
           <div class="pytorch-right-menu" id="pytorch-right-menu">
             <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
               <ul>
-<li><a class="reference internal" href="#">4. Code Coverage</a><ul>
-<li><a class="reference internal" href="#to-check-branch-stability-run-the-sanity-suite-as-follows">4.1. To check branch stability run the sanity suite as follows</a></li>
-<li><a class="reference internal" href="#to-run-frontend-build-suite-run-following-command">4.2. To run frontend build suite run following command</a></li>
-<li><a class="reference internal" href="#to-run-backend-pytest-suite-run-following-command">4.3. To run backend pytest suite run following command</a></li>
-<li><a class="reference internal" href="#to-run-python-linting-on-ts-package-run-following-command">4.4. To run python linting on <code class="docutils literal notranslate"><span class="pre">ts</span></code> package run following command</a></li>
-<li><a class="reference internal" href="#to-run-pytest-suite-on-model-archiver-run-following-command">4.5. To run pytest suite on model-archiver run following command</a></li>
-<li><a class="reference internal" href="#to-run-it-suite-on-model-archiver-run-following-command">4.6. To run IT suite on model-archiver run following command</a></li>
-<li><a class="reference internal" href="#to-run-the-markdown-link-check-run-following-command">4.7. To run the markdown link check run following command</a><ul>
-<li><a class="reference internal" href="#install-markdown-link-checker-dependencies">4.7.1. Install markdown link checker dependencies</a></li>
+<li><a class="reference internal" href="#">13. Running TorchServe with NVIDIA MPS</a><ul>
+<li><a class="reference internal" href="#benchmarks">13.1. Benchmarks</a><ul>
+<li><a class="reference internal" href="#g4-instance">13.1.1. G4 Instance</a></li>
+<li><a class="reference internal" href="#p3-instance">13.1.2. P3 instance</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#summary">13.2. Summary</a></li>
 </ul>
 </li>
 </ul>

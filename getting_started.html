@@ -257,12 +257,13 @@
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">10. Model Zoo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases.html">17. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">18. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mps.html">13. Running TorchServe with NVIDIA MPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snapshot.html">14. TorchServe model snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">15. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">16. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">17. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">18. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">19. TorchServe Workflows</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
@@ -372,7 +373,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>For GPU with Cuda 10.2. Options are <code class="docutils literal notranslate"><span class="pre">cu92</span></code>, <code class="docutils literal notranslate"><span class="pre">cu101</span></code>, <code class="docutils literal notranslate"><span class="pre">cu102</span></code>, <code class="docutils literal notranslate"><span class="pre">cu111</span></code>, <code class="docutils literal notranslate"><span class="pre">cu113</span></code>, <code class="docutils literal notranslate"><span class="pre">cu116</span></code>, <code class="docutils literal notranslate"><span class="pre">cu117</span></code></p>
+<li><p>For GPU with Cuda 10.2. Options are <code class="docutils literal notranslate"><span class="pre">cu92</span></code>, <code class="docutils literal notranslate"><span class="pre">cu101</span></code>, <code class="docutils literal notranslate"><span class="pre">cu102</span></code>, <code class="docutils literal notranslate"><span class="pre">cu111</span></code>, <code class="docutils literal notranslate"><span class="pre">cu113</span></code>, <code class="docutils literal notranslate"><span class="pre">cu116</span></code>, <code class="docutils literal notranslate"><span class="pre">cu117</span></code>, <code class="docutils literal notranslate"><span class="pre">cu118</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>./ts_scripts/install_dependencies.py<span class="w"> </span>--cuda<span class="o">=</span>cu102
 </pre></div>
 </div>

@@ -259,12 +259,13 @@
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">10. Model Zoo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="snapshot.html">13. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">14. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">15. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">16. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases.html">17. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">18. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mps.html">13. Running TorchServe with NVIDIA MPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snapshot.html">14. TorchServe model snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">15. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">16. TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">17. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">18. Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">19. TorchServe Workflows</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Service APIs:</span></p>
 <ul>
@@ -630,6 +631,12 @@ This is used in conjunction with <code class="docutils literal notranslate"><spa
 <span class="s">}</span>
 </pre></div>
 </div>
+<p>Starting from version 0.8.0, TorchServe allows for model configuration using a YAML file embedded in the MAR file. This YAML file contains two distinct parts that determine how a model is configured: frontend parameters and backend parameters. (see <a class="reference external" href="https://github.com/pytorch/serve/tree/master/model-archiver#config-file">details</a>)</p>
+<ul class="simple">
+<li><p>The frontend parameters are controlled by TorchServe’s frontend and specify the parameter name and default values. TorchServe now uses a priority order to determine the final value of a model’s parameters in frontend. Specifically, the config.property file has the lowest priority, followed by the model configuration YAML file, and finally, the REST or gRPC model management API has the highest priority.</p></li>
+<li><p>The backend parameters are fully controlled by the user. Users customized handler can access the backend parameters via the <code class="docutils literal notranslate"><span class="pre">model_yaml_config</span></code> property of the <a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/context.py#L24">context object</a>. For example, context.model_yaml_config[”pippy”][”rpc_timeout”].</p></li>
+<li><p>User can allocate specific GPU device IDs to a model by defining “deviceIds” in the frontend parameters in the YAML file. TorchServe uses a round-robin strategy to assign device IDs to a model’s worker. If specified in the YAML file, it round-robins the device IDs listed; otherwise, it uses all visible device IDs on the host.</p></li>
+</ul>
 </section>
 <section id="other-properties">
 <h3><span class="section-number">5.3.14. </span>Other properties<a class="headerlink" href="#other-properties" title="Permalink to this headline">¶</a></h3>
@@ -652,7 +659,7 @@ the backend workers convert “Bytearray to utf-8 string” when the Content-Typ
 <li><p><code class="docutils literal notranslate"><span class="pre">max_request_size</span></code> : The maximum allowable request size that the Torchserve accepts, in bytes. Default: 6553500</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_response_size</span></code> : The maximum allowable response size that the Torchserve sends, in bytes. Default: 6553500</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">limit_max_image_pixels</span></code> : Default value is true (Use default <a class="reference external" href="https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.MAX_IMAGE_PIXELS">PIL.Image.MAX_IMAGE_PIXELS</a>). If this is set to “false”, set PIL.Image.MAX_IMAGE_PIXELS = None in backend default vision handler for large image payload.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">allowed_urls</span></code> : Comma separated regex of allowed source URL(s) from where models can be registered. Default: “file://.<em>|http(s)?://.</em>” (all URLs and local file system)
+<li><p><code class="docutils literal notranslate"><span class="pre">allowed_urls</span></code> : Comma separated regex of allowed source URL(s) from where models can be registered. Default: <code class="docutils literal notranslate"><span class="pre">file://.*|http(s)?://.*</span></code> (all URLs and local file system)
 e.g. : To allow base URLs <code class="docutils literal notranslate"><span class="pre">https://s3.amazonaws.com/</span></code> and <code class="docutils literal notranslate"><span class="pre">https://torchserve.pytorch.org/</span></code> use the following regex string <code class="docutils literal notranslate"><span class="pre">allowed_urls=https://s3.amazonaws.com/.*,https://torchserve.pytorch.org/.*</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">workflow_store</span></code> : Path of workflow store directory. Defaults to model store directory.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">disable_system_metrics</span></code> : Disable collection of system metrics when set to “true”. Default value is “false”.</p></li>
