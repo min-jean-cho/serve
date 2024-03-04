@@ -30,13 +30,17 @@
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-  <!-- Google Analytics -->
-  
-  <!-- End Google Analytics -->
+  <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T8XT4PS');</script>
+    <!-- End Google Tag Manager -->
   
 
   
@@ -80,7 +84,19 @@
           </li>
 
           <li>
-            <a href="https://pytorch.org/mobile">Mobile</a>
+          <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Edge
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/edge">
+                  <span class="dropdown-title">About PyTorch Edge</span>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/executorch">
+                  <span class="dropdown-title">ExecuTorch</span>
+                </a>
+              </div>
+            </div>  
           </li>
 
           <li>
@@ -242,29 +258,32 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html">1. TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../Troubleshooting.html">2. Troubleshooting Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../batch_inference_with_ts.html">3. Batch Inference with TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../code_coverage.html">4. Code Coverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">5. Advanced configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../custom_service.html">6. Custom Service</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../default_handlers.html">7. TorchServe default inference handlers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../logging.html">8. Logging in Torchserve</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">9. TorchServe Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">10. Model Zoo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../request_envelopes.html">11. Request Envelopes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../server.html">12. Running TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mps.html">13. Running TorchServe with NVIDIA MPS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../snapshot.html">14. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../sphinx/requirements.html">15. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../torchserve_on_win_native.html">16. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../torchserve_on_wsl.html">17. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../use_cases.html">18. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../workflows.html">19. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Troubleshooting.html">Troubleshooting Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../performance_guide.html">Performance Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../batch_inference_with_ts.html">Batch Inference with TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code_coverage.html">Code Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Advanced configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_service.html">Custom Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../default_handlers.html">TorchServe default inference handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../logging.html">Logging in Torchserve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">TorchServe Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../request_envelopes.html">Request Envelopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../server.html">Running TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nvidia_mps.html">Running TorchServe with NVIDIA MPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../snapshot.html">TorchServe model snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchserve_on_win_native.html">TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchserve_on_wsl.html">TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../use_cases.html">Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflows.html">TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../large_model_inference.html">Serving large models with Torchserve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Security.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQs.html">FAQ’S</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Service APIs:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../inference_api.html">Inference API</a></li>
@@ -274,7 +293,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -347,6 +366,10 @@
         <div class="pytorch-content-left">
 
         
+          <!-- Google Tag Manager (noscript) -->
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8XT4PS"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+          <!-- End Google Tag Manager (noscript) -->
           
           <div class="rst-content">
           
@@ -365,6 +388,8 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
+<span class="kn">import</span> <span class="nn">yaml</span>
+
 
 <div class="viewcode-block" id="PT2Backend"><a class="viewcode-back" href="../../../api/ts.utils.html#ts.utils.util.PT2Backend">[docs]</a><span class="k">class</span> <span class="nc">PT2Backend</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">EAGER</span> <span class="o">=</span> <span class="s2">&quot;eager&quot;</span>
@@ -376,7 +401,8 @@
     <span class="n">OFI</span> <span class="o">=</span> <span class="s2">&quot;ofi&quot;</span>
     <span class="n">FX2TRT</span> <span class="o">=</span> <span class="s2">&quot;fx2trt&quot;</span>
     <span class="n">ONNXRT</span> <span class="o">=</span> <span class="s2">&quot;onnxrt&quot;</span>
-    <span class="n">IPEX</span> <span class="o">=</span> <span class="s2">&quot;ipex&quot;</span></div>
+    <span class="n">IPEX</span> <span class="o">=</span> <span class="s2">&quot;ipex&quot;</span>
+    <span class="n">TORCHXLA_TRACE_ONCE</span> <span class="o">=</span> <span class="s2">&quot;torchxla_trace_once&quot;</span></div>
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -409,24 +435,13 @@
     <span class="k">return</span> <span class="n">classes</span></div>
 
 
-<div class="viewcode-block" id="load_compiler_config"><a class="viewcode-back" href="../../../api/ts.utils.html#ts.utils.util.load_compiler_config">[docs]</a><span class="k">def</span> <span class="nf">load_compiler_config</span><span class="p">(</span><span class="n">config_file_path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load a compiler {compiler_name -&gt; compiler }</span>
-<span class="sd">    Can be extended to also support kwargs for ONNX and TensorRT</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_file_path</span><span class="p">):</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config_file_path</span><span class="si">}</span><span class="s2"> is missing. PT 2.0 will not be used&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">mapping</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-
+<div class="viewcode-block" id="check_valid_pt2_backend"><a class="viewcode-back" href="../../../api/ts.utils.html#ts.utils.util.check_valid_pt2_backend">[docs]</a><span class="k">def</span> <span class="nf">check_valid_pt2_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="n">backend_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">member</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">PT2Backend</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;pt2&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">backend_values</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;pt2&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">backend_values</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;pt2&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> is not a supported backend&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">backend</span><span class="si">}</span><span class="s2"> is not a supported backend&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="load_label_mapping"><a class="viewcode-back" href="../../../api/ts.utils.html#ts.utils.util.load_label_mapping">[docs]</a><span class="k">def</span> <span class="nf">load_label_mapping</span><span class="p">(</span><span class="n">mapping_file_path</span><span class="p">):</span>
@@ -492,6 +507,13 @@
     <span class="k">return</span> <span class="n">results</span></div>
 
 
+<div class="viewcode-block" id="get_yaml_config"><a class="viewcode-back" href="../../../api/ts.utils.html#ts.utils.util.get_yaml_config">[docs]</a><span class="k">def</span> <span class="nf">get_yaml_config</span><span class="p">(</span><span class="n">yaml_file_path</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yaml_file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">config</span></div>
+
+
 <div class="viewcode-block" id="PredictionException"><a class="viewcode-back" href="../../../api/ts.utils.html#ts.utils.util.PredictionException">[docs]</a><span class="k">class</span> <span class="nc">PredictionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
@@ -551,6 +573,7 @@
          <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
          <script src="../../../_static/jquery.js"></script>
          <script src="../../../_static/underscore.js"></script>
+         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
          <script src="../../../_static/doctools.js"></script>
          <script src="../../../_static/katex.min.js"></script>
          <script src="../../../_static/auto-render.min.js"></script>
@@ -656,9 +679,9 @@
         <div class="copyright">
         <p>© Copyright The Linux Foundation. The PyTorch Foundation is a project of The Linux Foundation.
           For web site terms of use, trademark policy and other policies applicable to The PyTorch Foundation please see
-          <a href="www.linuxfoundation.org/policies/">www.linuxfoundation.org/policies/</a>. The PyTorch Foundation supports the PyTorch open source
+          <a href="https://www.linuxfoundation.org/policies/">www.linuxfoundation.org/policies/</a>. The PyTorch Foundation supports the PyTorch open source
           project, which has been established as PyTorch Project a Series of LF Projects, LLC. For policies applicable to the PyTorch Project a Series of LF Projects, LLC,
-          please see <a href="www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.</p>
+          please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.</p>
       </div>
      </div>
 
@@ -697,7 +720,7 @@
           </li>
             
           <li>
-            <a href="https://pytorch.org/mobile">Mobile</a>
+            <a href="">Mobile</a>
           </li>
 
           <li>

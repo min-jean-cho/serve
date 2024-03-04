@@ -6,11 +6,10 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13. Running TorchServe with NVIDIA MPS &mdash; PyTorch/Serve master documentation</title>
+  <title>ts.torch_handler.image_classifier &mdash; PyTorch/Serve master documentation</title>
   
 
   
@@ -26,33 +25,35 @@
 
   
 
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> -->
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="14. TorchServe model snapshot" href="snapshot.html" />
-    <link rel="prev" title="12. Running TorchServe" href="server.html" />
-  <!-- Google Analytics -->
-  
-  <!-- End Google Analytics -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/katex-math.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T8XT4PS');</script>
+    <!-- End Google Tag Manager -->
   
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="../../../_static/js/modernizr.min.js"></script>
 
   <!-- Preload the theme fonts -->
 
-<link rel="preload" href="_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
 <!-- Preload the katex fonts -->
 
@@ -83,7 +84,19 @@
           </li>
 
           <li>
-            <a href="https://pytorch.org/mobile">Mobile</a>
+          <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Edge
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/edge">
+                  <span class="dropdown-title">About PyTorch Edge</span>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/executorch">
+                  <span class="dropdown-title">ExecuTorch</span>
+                </a>
+              </div>
+            </div>  
           </li>
 
           <li>
@@ -229,7 +242,7 @@
 
 
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search Docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -245,47 +258,50 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">1. TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">2. Troubleshooting Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="batch_inference_with_ts.html">3. Batch Inference with TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="code_coverage.html">4. Code Coverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">5. Advanced configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_service.html">6. Custom Service</a></li>
-<li class="toctree-l1"><a class="reference internal" href="default_handlers.html">7. TorchServe default inference handlers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="logging.html">8. Logging in Torchserve</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">9. TorchServe Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">10. Model Zoo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">13. Running TorchServe with NVIDIA MPS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="snapshot.html">14. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">15. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">16. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">17. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases.html">18. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">19. TorchServe Workflows</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Service APIs:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="grpc_api.html">TorchServe gRPC API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="inference_api.html">Inference API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="management_api.html">Management API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics_api.html">Metrics API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rest_api.html">TorchServe REST API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflow_inference_api.html">Workflow Inference API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflow_management_api.html">Management API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Troubleshooting.html">Troubleshooting Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../performance_guide.html">Performance Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../batch_inference_with_ts.html">Batch Inference with TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code_coverage.html">Code Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Advanced configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_service.html">Custom Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../default_handlers.html">TorchServe default inference handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../logging.html">Logging in Torchserve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">TorchServe Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../request_envelopes.html">Request Envelopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../server.html">Running TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nvidia_mps.html">Running TorchServe with NVIDIA MPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../snapshot.html">TorchServe model snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchserve_on_win_native.html">TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchserve_on_wsl.html">TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../use_cases.html">Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflows.html">TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../large_model_inference.html">Serving large models with Torchserve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Security.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQs.html">FAQ’S</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/ts.html">ts package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.html">ts.torch_handler package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/ts.metrics.html">ts.metrics package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/ts.model_service.html">ts.model_service package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/ts.protocol.html">ts.protocol package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">serve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../grpc_api.html">TorchServe gRPC API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inference_api.html">Inference API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../management_api.html">Management API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics_api.html">Metrics API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_api.html">TorchServe REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow_inference_api.html">Workflow Inference API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow_management_api.html">Management API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/ts.html">ts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/ts.torch_handler.html">ts.torch_handler package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/ts.metrics.html">ts.metrics package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/ts.model_service.html">ts.model_service package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/ts.protocol.html">ts.protocol package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">serve</a></li>
 </ul>
 
             
@@ -318,7 +334,7 @@
   <ul class="pytorch-breadcrumbs">
     
       <li>
-        <a href="contents.html">
+        <a href="../../../contents.html">
           
             Docs
           
@@ -326,14 +342,12 @@
       </li>
 
         
-      <li><span class="section-number">13. </span>Running TorchServe with NVIDIA MPS</li>
+          <li><a href="../../index.html">Module code</a> &gt;</li>
+        
+      <li>ts.torch_handler.image_classifier</li>
     
     
       <li class="pytorch-breadcrumbs-aside">
-        
-            
-            <a href="_sources/mps.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
-          
         
       </li>
     
@@ -352,114 +366,67 @@
         <div class="pytorch-content-left">
 
         
+          <!-- Google Tag Manager (noscript) -->
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8XT4PS"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+          <!-- End Google Tag Manager (noscript) -->
           
           <div class="rst-content">
           
             <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
               
-  <section id="running-torchserve-with-nvidia-mps">
-<h1><span class="section-number">13. </span>Running TorchServe with NVIDIA MPS<a class="headerlink" href="#running-torchserve-with-nvidia-mps" title="Permalink to this headline">¶</a></h1>
-<p>In order to deploy ML models, TorchServe spins up each worker in a separate processes, thus isolating each worker from the others.
-Each process creates its own CUDA context to execute its kernels and access the allocated memory.</p>
-<p>While NVIDIA GPUs in their default setting allow multiple processes to run CUDA kernels on a single device it involves the following drawback:</p>
-<ul class="simple">
-<li><p>The execution of the kernels is generally serialized</p></li>
-<li><p>Each processes creates its own CUDA context which occupies additional GPU memory</p></li>
-</ul>
-<p>For these scenarios NVIDIA offers the Multi-Process Service (MPS) which:</p>
-<ul class="simple">
-<li><p>Allows multiple processes to share the same CUDA context on the same GPU</p></li>
-<li><p>Run their kernels in a parallel fashion</p></li>
-</ul>
-<p>This can result in:</p>
-<ul class="simple">
-<li><p>Increased performance when using multiple workers on the same GPU</p></li>
-<li><p>Decreased GPU memory utilization due to the shared context</p></li>
-</ul>
-<p>To leverage the benefits of NVIDIA MPS we need to start the MPS daemon with the following commands before starting up TorchServe itself.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nvidia</span><span class="o">-</span><span class="n">smi</span> <span class="o">-</span><span class="n">c</span> <span class="mi">3</span>
-<span class="n">nvidia</span><span class="o">-</span><span class="n">cuda</span><span class="o">-</span><span class="n">mps</span><span class="o">-</span><span class="n">control</span> <span class="o">-</span><span class="n">d</span>
-</pre></div>
-</div>
-<p>The first command enables the exclusive processing mode for the GPU allowing only one process (the MPS daemon) to utilize it.
-The second command starts the MPS daemon itself.
-To shutdown the daemon we can execute:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="n">quit</span> <span class="o">|</span> <span class="n">nvidia</span><span class="o">-</span><span class="n">cuda</span><span class="o">-</span><span class="n">mps</span><span class="o">-</span><span class="n">control</span>
-</pre></div>
-</div>
-<p>For more details on MPS please refer to <a class="reference external" href="https://docs.nvidia.com/deploy/mps/index.html">NVIDIA’s MPS documentation</a>.
-It should be noted that MPS only allows 48 processes (for Volta GPUs) to connect to the daemon due limited hardware resources.
-Adding more clients/workers (to the same GPU) will lead to a failure.</p>
-<section id="benchmarks">
-<h2><span class="section-number">13.1. </span>Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this headline">¶</a></h2>
-<p>To show the performance of TorchServe with activated MPS and help to the decision in enabling MPS for your deployment or not we will perform some benchmarks with representative workloads.</p>
-<p>Primarily, we want to investigate how the throughput of a worker evolves with activated MPS for different operation points.
-As an example work load for our benchmark we select the <a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples/Huggingface_Transformers#sequence-classification">HuggingFace Transformers Sequence Classification example</a>.
-We perform the benchmark on a g4dn.4xlarge as well as a p3.2xlarge instance on AWS.
-Both instance types provide one GPU per instance which will result in multiple workers to be scheduled on the same GPU.
-For the benchmark we concentrate on the model throughput as measured by the <a class="reference external" href="https://github.com/pytorch/serve/tree/master/benchmarks/benchmark-ab.py">benchmark-ab.py</a> tool.</p>
-<p>First, we measure the throughput of a single worker for different batch sizes as it will show us at which point the compute resources of the GPU are fully occupied.
-Second, we measure the throughput with two deployed workers for the batch sizes where we expect the GPUs to have still some resources left over to share.
-For each benchmark we perform five runs and take the median over the runs.</p>
-<p>We use the following config.json for the benchmark, only overwriting the number of workers and the batch size accordingly.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;/home/ubuntu/serve/examples/Huggingface_Transformers/model_store/BERTSeqClassification&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;requests&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
-    <span class="s2">&quot;concurrency&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
-    <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/ubuntu/serve/examples/Huggingface_Transformers/Seq_classification_artifacts/sample_text_captum_input.txt&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;workers&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Please note that we set the concurrency level to 600 which will make sure that the batch aggregation inside TorchServe fills up the batches to the maximum batch size. But concurrently this will skew the latency measurements as many requests will be waiting in the queue to be processed. We will therefore neglect the latency measurements in the following.</p>
-<section id="g4-instance">
-<h3><span class="section-number">13.1.1. </span>G4 Instance<a class="headerlink" href="#g4-instance" title="Permalink to this headline">¶</a></h3>
-<p>We first perform the single worker benchmark for the G4 instance.
-In the figure below we see that up to a batch size of four we see a steady increase of the throughput over the batch size.</p>
-<p><img alt="G4 benchmark, single worker" src="_images/mps_g4_single.png" /></p>
-<p>Next, we increase the number of workers to two in order to compare the throughput with and without MPS running.
-To enable MPS for the second set of runs we first set the exclusive processing mode for the GPU and then start the MPS daemon as shown above.</p>
-<p>We select the batch size between one and eight according to our previous findings.
-In the figure we can see that the performance in terms of throughput can be better in case of batch size 1 and 8 (up to +18%) while it can be worse for others (-11%).
-An interpretation of this result could be that the G4 instance has not many resources to share when we run a BERT model in one of the workers.</p>
-<p><img alt="G4 benchmark, two workers" src="_images/mps_g4_two_worker.png" /></p>
-</section>
-<section id="p3-instance">
-<h3><span class="section-number">13.1.2. </span>P3 instance<a class="headerlink" href="#p3-instance" title="Permalink to this headline">¶</a></h3>
-<p>Next, we will run the same experiment with the bigger p3.2xlarge instance.
-With a single worker we get the following throughput values:</p>
-<p><img alt="P3 benchmark, single worker" src="_images/mps_p3_single.png" /></p>
-<p>We can see that the throughput steady increases but for a batch size over eight we see diminishing returns.
-Finally, we deploy two workers on the P3 instance and compare running them with and without MPS.
-We can see that for batch size between 1 and 32 the throughput is consistently higher (up to +25%) for MPS enabled with the exception of batch size 16.</p>
-<p><img alt="P3 benchmark, two workers" src="_images/mps_p3_two_worker.png" /></p>
-</section>
-</section>
-<section id="summary">
-<h2><span class="section-number">13.2. </span>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>In the previous section we saw that by enabling MPS for two workers running the same model we receive mixed results.
-For the smaller G4 instance we only saw benefits in certain operation points while we saw more consistent improvements for the bigger P3 instance.
-This suggests that the benefit in terms of throughput for running a deployment with MPS are highly workload and environment dependent and need to be determined for specific situations using appropriate benchmarks and tools.
-It should be noted that the previous benchmark solely focused on throughput and neglected latency and memory footprint.
-As using MPS will only create a single CUDA context more workers can be packed to the same GPU which needs to be considered as well in the according scenarios.</p>
-</section>
-</section>
+  <h1>Source code for ts.torch_handler.image_classifier</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module for image classification default handler</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
 
+<span class="kn">from</span> <span class="nn">ts.handler_utils.timer</span> <span class="kn">import</span> <span class="n">timed</span>
+
+<span class="kn">from</span> <span class="nn">..utils.util</span> <span class="kn">import</span> <span class="n">map_class_to_label</span>
+<span class="kn">from</span> <span class="nn">.vision_handler</span> <span class="kn">import</span> <span class="n">VisionHandler</span>
+
+
+<div class="viewcode-block" id="ImageClassifier"><a class="viewcode-back" href="../../../api/ts.torch_handler.html#ts.torch_handler.image_classifier.ImageClassifier">[docs]</a><span class="k">class</span> <span class="nc">ImageClassifier</span><span class="p">(</span><span class="n">VisionHandler</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ImageClassifier handler class. This handler takes an image</span>
+<span class="sd">    and returns the name of object in that image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">topk</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="c1"># These are the standard Imagenet dimensions</span>
+    <span class="c1"># and statistics</span>
+    <span class="n">image_processing</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="ImageClassifier.set_max_result_classes"><a class="viewcode-back" href="../../../api/ts.torch_handler.html#ts.torch_handler.image_classifier.ImageClassifier.set_max_result_classes">[docs]</a>    <span class="k">def</span> <span class="nf">set_max_result_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topk</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topk</span> <span class="o">=</span> <span class="n">topk</span></div>
+
+<div class="viewcode-block" id="ImageClassifier.get_max_result_classes"><a class="viewcode-back" href="../../../api/ts.torch_handler.html#ts.torch_handler.image_classifier.ImageClassifier.get_max_result_classes">[docs]</a>    <span class="k">def</span> <span class="nf">get_max_result_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">topk</span></div>
+
+    <span class="nd">@timed</span>
+    <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">probs</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">topk</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">probs</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">map_class_to_label</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span></div>
+</pre></div>
 
              </article>
              
             </div>
             <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="snapshot.html" class="btn btn-neutral float-right" title="14. TorchServe model snapshot" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
-      
-      
-        <a href="server.html" class="btn btn-neutral" title="12. Running TorchServe" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
-      
-    </div>
   
 
   
@@ -488,18 +455,7 @@ As using MPS will only create a single CUDA context more workers can be packed t
         <div class="pytorch-content-right" id="pytorch-content-right">
           <div class="pytorch-right-menu" id="pytorch-right-menu">
             <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
-              <ul>
-<li><a class="reference internal" href="#">13. Running TorchServe with NVIDIA MPS</a><ul>
-<li><a class="reference internal" href="#benchmarks">13.1. Benchmarks</a><ul>
-<li><a class="reference internal" href="#g4-instance">13.1.1. G4 Instance</a></li>
-<li><a class="reference internal" href="#p3-instance">13.1.2. P3 instance</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#summary">13.2. Summary</a></li>
-</ul>
-</li>
-</ul>
-
+              
             </div>
           </div>
         </div>
@@ -512,22 +468,23 @@ As using MPS will only create a single CUDA context more workers can be packed t
   
 
      
-       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-         <script src="_static/jquery.js"></script>
-         <script src="_static/underscore.js"></script>
-         <script src="_static/doctools.js"></script>
-         <script src="_static/katex.min.js"></script>
-         <script src="_static/auto-render.min.js"></script>
-         <script src="_static/katex_autorenderer.js"></script>
+       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+         <script src="../../../_static/jquery.js"></script>
+         <script src="../../../_static/underscore.js"></script>
+         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+         <script src="../../../_static/doctools.js"></script>
+         <script src="../../../_static/katex.min.js"></script>
+         <script src="../../../_static/auto-render.min.js"></script>
+         <script src="../../../_static/katex_autorenderer.js"></script>
      
 
   
 
-  <script type="text/javascript" src="_static/js/vendor/popper.min.js"></script>
-  <script type="text/javascript" src="_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/vendor/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-  <script type="text/javascript" src="_static/js/theme.js"></script>
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
@@ -621,9 +578,9 @@ As using MPS will only create a single CUDA context more workers can be packed t
         <div class="copyright">
         <p>© Copyright The Linux Foundation. The PyTorch Foundation is a project of The Linux Foundation.
           For web site terms of use, trademark policy and other policies applicable to The PyTorch Foundation please see
-          <a href="www.linuxfoundation.org/policies/">www.linuxfoundation.org/policies/</a>. The PyTorch Foundation supports the PyTorch open source
+          <a href="https://www.linuxfoundation.org/policies/">www.linuxfoundation.org/policies/</a>. The PyTorch Foundation supports the PyTorch open source
           project, which has been established as PyTorch Project a Series of LF Projects, LLC. For policies applicable to the PyTorch Project a Series of LF Projects, LLC,
-          please see <a href="www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.</p>
+          please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.</p>
       </div>
      </div>
 
@@ -632,7 +589,7 @@ As using MPS will only create a single CUDA context more workers can be packed t
   <div class="cookie-banner-wrapper">
   <div class="container">
     <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. As the current maintainers of this site, Facebook’s Cookies Policy applies. Learn more, including about available controls: <a href="https://www.facebook.com/policies/cookies/">Cookies Policy</a>.</p>
-    <img class="close-button" src="_static/images/pytorch-x.svg">
+    <img class="close-button" src="../../../_static/images/pytorch-x.svg">
   </div>
 </div>
 
@@ -662,7 +619,7 @@ As using MPS will only create a single CUDA context more workers can be packed t
           </li>
             
           <li>
-            <a href="https://pytorch.org/mobile">Mobile</a>
+            <a href="">Mobile</a>
           </li>
 
           <li>
@@ -768,7 +725,7 @@ As using MPS will only create a single CUDA context more workers can be packed t
 
   <!-- End Mobile Menu -->
 
-  <script type="text/javascript" src="_static/js/vendor/anchor.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/vendor/anchor.min.js"></script>
 
   <script type="text/javascript">
     $(document).ready(function() {

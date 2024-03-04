@@ -6,11 +6,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>18. Torchserve Use Cases &mdash; PyTorch/Serve master documentation</title>
+  <title>Torchserve Use Cases &mdash; PyTorch/Serve master documentation</title>
   
 
   
@@ -31,15 +31,19 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" type="text/css" />
   <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="19. TorchServe Workflows" href="workflows.html" />
-    <link rel="prev" title="17. TorchServe on Windows Subsystem for Linux (WSL)" href="torchserve_on_wsl.html" />
-  <!-- Google Analytics -->
-  
-  <!-- End Google Analytics -->
+    <link rel="next" title="TorchServe Workflows" href="workflows.html" />
+    <link rel="prev" title="TorchServe on Windows Subsystem for Linux (WSL)" href="torchserve_on_wsl.html" />
+  <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T8XT4PS');</script>
+    <!-- End Google Tag Manager -->
   
 
   
@@ -83,7 +87,19 @@
           </li>
 
           <li>
-            <a href="https://pytorch.org/mobile">Mobile</a>
+          <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Edge
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/edge">
+                  <span class="dropdown-title">About PyTorch Edge</span>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/executorch">
+                  <span class="dropdown-title">ExecuTorch</span>
+                </a>
+              </div>
+            </div>  
           </li>
 
           <li>
@@ -245,29 +261,32 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">1. TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">2. Troubleshooting Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="batch_inference_with_ts.html">3. Batch Inference with TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="code_coverage.html">4. Code Coverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">5. Advanced configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_service.html">6. Custom Service</a></li>
-<li class="toctree-l1"><a class="reference internal" href="default_handlers.html">7. TorchServe default inference handlers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="logging.html">8. Logging in Torchserve</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">9. TorchServe Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">10. Model Zoo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">11. Request Envelopes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="server.html">12. Running TorchServe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mps.html">13. Running TorchServe with NVIDIA MPS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="snapshot.html">14. TorchServe model snapshot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sphinx/requirements.html">15. cf. https://github.com/ryanfox/sphinx-markdown-tables/issues/36</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">16. TorchServe on Windows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">17. TorchServe on Windows Subsystem for Linux (WSL)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">18. Torchserve Use Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflows.html">19. TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">Troubleshooting Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_guide.html">Performance Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch_inference_with_ts.html">Batch Inference with TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_coverage.html">Code Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Advanced configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_service.html">Custom Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_handlers.html">TorchServe default inference handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging in Torchserve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">TorchServe Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request_envelopes.html">Request Envelopes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Running TorchServe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvidia_mps.html">Running TorchServe with NVIDIA MPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snapshot.html">TorchServe model snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_win_native.html">TorchServe on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torchserve_on_wsl.html">TorchServe on Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Torchserve Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflows.html">TorchServe Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="large_model_inference.html">Serving large models with Torchserve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Security.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQs.html">FAQ’S</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Service APIs:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Service APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="grpc_api.html">TorchServe gRPC API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inference_api.html">Inference API</a></li>
@@ -277,7 +296,7 @@
 <li class="toctree-l1"><a class="reference internal" href="workflow_inference_api.html">Workflow Inference API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_management_api.html">Management API</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer APIs:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.html">ts package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/ts.torch_handler.request_envelope.html">ts.torch_handler.request_envelope package</a></li>
@@ -326,7 +345,7 @@
       </li>
 
         
-      <li><span class="section-number">18. </span>Torchserve Use Cases</li>
+      <li>Torchserve Use Cases</li>
     
     
       <li class="pytorch-breadcrumbs-aside">
@@ -352,6 +371,10 @@
         <div class="pytorch-content-left">
 
         
+          <!-- Google Tag Manager (noscript) -->
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8XT4PS"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+          <!-- End Google Tag Manager (noscript) -->
           
           <div class="rst-content">
           
@@ -359,7 +382,7 @@
              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
               
   <section id="torchserve-use-cases">
-<h1><span class="section-number">18. </span>Torchserve Use Cases<a class="headerlink" href="#torchserve-use-cases" title="Permalink to this headline">¶</a></h1>
+<h1>Torchserve Use Cases<a class="headerlink" href="#torchserve-use-cases" title="Permalink to this heading">¶</a></h1>
 <p>Torchserve can be used for different use cases. In order to make it convenient for users, some of them have been documented here.
 These use-cases assume you have pre-trained model(s) and <code class="docutils literal notranslate"><span class="pre">torchserve</span></code>, <code class="docutils literal notranslate"><span class="pre">torch-model-archiver</span></code> is installed on your target system.
 This should help you in moving your development environment model to production/serving environment.</p>
@@ -377,7 +400,7 @@ This should help you in moving your development environment model to production/
 <li><p>Please refer <a class="reference internal" href="custom_service.html"><span class="doc">custom handlers</span></a> to understand custom handlers.</p></li>
 </ul>
 <section id="use-cases">
-<h2><span class="section-number">18.1. </span>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h2>
+<h2>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="#deploy-pytorch-eager-mode-model">Serve pytorch eager mode model</a></p>
 <p><a class="reference external" href="#deploy-pytorch-scripted-mode-model">Serve pytorch scripted mode model</a></p>
 <p><a class="reference external" href="#serve-readymade-models-on-torchserve-model-zoo">Serve ready made models on torchserve model zoo</a></p>
@@ -387,7 +410,7 @@ This should help you in moving your development environment model to production/
 <p><a class="reference external" href="#serve-custom-models-with-third-party-dependency">Serve custom models with third party dependency</a></p>
 <p><a class="reference external" href="#serve-models-for-ab-testing">Serve models for A/B testing</a></p>
 <section id="deploy-pytorch-eager-mode-model">
-<h3><span class="section-number">18.1.1. </span>Deploy pytorch eager mode model<a class="headerlink" href="#deploy-pytorch-eager-mode-model" title="Permalink to this headline">¶</a></h3>
+<h3>Deploy pytorch eager mode model<a class="headerlink" href="#deploy-pytorch-eager-mode-model" title="Permalink to this heading">¶</a></h3>
 <p><strong>Steps to deploy your model(s)</strong></p>
 <ul>
 <li><p>Create MAR file for <a class="reference external" href="../examples/README.md#creating-mar-file-for-eager-mode-model">torch eager model</a></p>
@@ -422,7 +445,7 @@ This should help you in moving your development environment model to production/
 </ul>
 </section>
 <section id="deploy-pytorch-scripted-mode-model">
-<h3><span class="section-number">18.1.2. </span>Deploy pytorch scripted mode model<a class="headerlink" href="#deploy-pytorch-scripted-mode-model" title="Permalink to this headline">¶</a></h3>
+<h3>Deploy pytorch scripted mode model<a class="headerlink" href="#deploy-pytorch-scripted-mode-model" title="Permalink to this heading">¶</a></h3>
 <p><strong>Prerequisites</strong></p>
 <ul class="simple">
 <li><p>Assuming you have a torchscripted model if not then follow instructions in this <a class="reference external" href="https://github.com/pytorch/serve/tree/master/examples/image_classifier/densenet_161">example</a> to save your eager mode model as scripted model.</p></li>
@@ -465,7 +488,7 @@ This should help you in moving your development environment model to production/
 </ul>
 </section>
 <section id="serve-readymade-models-on-torchserve-model-zoo">
-<h3><span class="section-number">18.1.3. </span>Serve readymade models on torchserve model zoo<a class="headerlink" href="#serve-readymade-models-on-torchserve-model-zoo" title="Permalink to this headline">¶</a></h3>
+<h3>Serve readymade models on torchserve model zoo<a class="headerlink" href="#serve-readymade-models-on-torchserve-model-zoo" title="Permalink to this heading">¶</a></h3>
 <p>This use case demostrates deployment of <a class="reference external" href="https://pytorch.org/hub/">torch hub</a> based <code class="docutils literal notranslate"><span class="pre">vision</span></code> models (classifier, object detector, segmenter) available on <a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/model_zoo">torchserve model zoo</a>.
 Use these steps to deploy <strong>publically hosted</strong> models as well.</p>
 <p><strong>Steps to deploy your model(s)</strong></p>
@@ -493,7 +516,7 @@ Use these steps to deploy <strong>publically hosted</strong> models as well.</p>
 </ul>
 </section>
 <section id="secure-model-serving">
-<h3><span class="section-number">18.1.4. </span>Secure model serving<a class="headerlink" href="#secure-model-serving" title="Permalink to this headline">¶</a></h3>
+<h3>Secure model serving<a class="headerlink" href="#secure-model-serving" title="Permalink to this heading">¶</a></h3>
 <p>This use case demonstrates torchserve deployment for secure model serving.
 The example taken here uses eager mode model however you can also deploy scripted models.</p>
 <p><strong>Steps to deploy your model(s)</strong></p>
@@ -516,7 +539,7 @@ The example taken here uses eager mode model however you can also deploy scripte
 <li><p>Create <code class="docutils literal notranslate"><span class="pre">config.properties</span></code> file with parameters option 1 or 2 given in <a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/configuration.md#examples">enable SSL</a></p></li>
 <li><p>Start torchserve using properties file created above as - <code class="docutils literal notranslate"><span class="pre">torchserve</span> <span class="pre">--start</span> <span class="pre">--ncs</span> <span class="pre">--model-store</span> <span class="pre">&lt;model_store</span> <span class="pre">or</span> <span class="pre">your_model_store_dir&gt;</span> <span class="pre">--ts-config</span> <span class="pre">&lt;your_path&gt;/config.properties</span></code></p>
 <ul class="simple">
-<li><p>Docker - <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-p8443:8433</span> <span class="pre">-p8444:8444</span> <span class="pre">-p8445:8445</span> <span class="pre">-v</span> <span class="pre">&lt;local_dir&gt;/model-store:/home/model-server/model-store</span> <span class="pre">&lt;your_docker_image&gt;</span> <span class="pre">torchserve</span> <span class="pre">--model-store=/tmp/models</span> <span class="pre">--ts-config</span> <span class="pre">&lt;your_path&gt;/config.properties</span></code></p></li>
+<li><p>Docker - <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-p</span> <span class="pre">127.0.0.1:8443:8433</span> <span class="pre">-p</span> <span class="pre">127.0.0.1:8444:8444</span> <span class="pre">-p</span> <span class="pre">127.0.0.1:8445:8445</span> <span class="pre">-v</span> <span class="pre">&lt;local_dir&gt;/model-store:/home/model-server/model-store</span> <span class="pre">&lt;your_docker_image&gt;</span> <span class="pre">torchserve</span> <span class="pre">--model-store=/tmp/models</span> <span class="pre">--ts-config</span> <span class="pre">&lt;your_path&gt;/config.properties</span></code></p></li>
 </ul>
 </li>
 <li><p>Register model i.e. MAR file created in step 1 above as <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">-k</span> <span class="pre">-v</span> <span class="pre">-X</span> <span class="pre">POST</span> <span class="pre">&quot;https://localhost:8081/models?initial_workers=1&amp;synchronous=true&amp;url=https://&lt;s3_path&gt;/&lt;your</span> <span class="pre">model_name&gt;.mar&quot;</span></code></p></li>
@@ -537,7 +560,7 @@ The example taken here uses eager mode model however you can also deploy scripte
 </ul>
 </section>
 <section id="serve-models-on-gpus">
-<h3><span class="section-number">18.1.5. </span>Serve models on GPUs<a class="headerlink" href="#serve-models-on-gpus" title="Permalink to this headline">¶</a></h3>
+<h3>Serve models on GPUs<a class="headerlink" href="#serve-models-on-gpus" title="Permalink to this heading">¶</a></h3>
 <p>This use case demonstrates torchserve deployment on GPU.
 The example taken here uses scripted mode model however you can also deploy eager models.</p>
 <p><strong>Prerequisites</strong></p>
@@ -566,7 +589,7 @@ then use <code class="docutils literal notranslate"><span class="pre">nvidia-smi
 e.g. number_of_gpu=2</p></li>
 <li><p>Start torchserve with all GPUs- <code class="docutils literal notranslate"><span class="pre">torchserve</span> <span class="pre">--start</span> <span class="pre">--ncs</span> <span class="pre">--model-store</span> <span class="pre">&lt;model_store</span> <span class="pre">or</span> <span class="pre">your_model_store_dir&gt;</span></code>. With restricted GPUs - <code class="docutils literal notranslate"><span class="pre">torchserve</span> <span class="pre">--start</span> <span class="pre">--ncs</span> <span class="pre">--model-store</span> <span class="pre">&lt;model_store</span> <span class="pre">or</span> <span class="pre">your_model_store_dir&gt;</span> <span class="pre">--ts-config</span> <span class="pre">&lt;your_path&gt;/config.properties</span></code></p>
 <ul class="simple">
-<li><p>Docker -  For all GPU <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-it</span> <span class="pre">--gpus</span> <span class="pre">all</span> <span class="pre">-p</span> <span class="pre">8080:8080</span> <span class="pre">-p</span> <span class="pre">8081:8081</span> <span class="pre">torchserve:gpu-latest</span></code> For GPUs 1 and 2 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-it</span> <span class="pre">--gpus</span> <span class="pre">'&quot;device=1,2&quot;'</span> <span class="pre">-p</span> <span class="pre">8080:8080</span> <span class="pre">-p</span> <span class="pre">8081:8081</span> <span class="pre">pytorch/torchserve:latest-gpu</span></code></p></li>
+<li><p>Docker -  For all GPU <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-it</span> <span class="pre">--gpus</span> <span class="pre">all</span> <span class="pre">-p</span> <span class="pre">127.0.0.1:8080:8080</span> <span class="pre">-p</span> <span class="pre">127.0.0.1:8081:8081</span> <span class="pre">torchserve:gpu-latest</span></code> For GPUs 1 and 2 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-it</span> <span class="pre">--gpus</span> <span class="pre">'&quot;device=1,2&quot;'</span> <span class="pre">-p</span> <span class="pre">8080:8080</span> <span class="pre">-p</span> <span class="pre">8081:8081</span> <span class="pre">pytorch/torchserve:latest-gpu</span></code></p></li>
 <li><p>Docker - For details refer <a class="reference external" href="../docker#start-gpu-container">start gpu container</a></p></li>
 </ul>
 </li>
@@ -582,7 +605,7 @@ e.g. number_of_gpu=2</p></li>
 </ul>
 </section>
 <section id="serve-custom-models-with-no-third-party-dependency">
-<h3><span class="section-number">18.1.6. </span>Serve custom models with no third party dependency<a class="headerlink" href="#serve-custom-models-with-no-third-party-dependency" title="Permalink to this headline">¶</a></h3>
+<h3>Serve custom models with no third party dependency<a class="headerlink" href="#serve-custom-models-with-no-third-party-dependency" title="Permalink to this heading">¶</a></h3>
 <p>This use case demonstrates torchserve deployment for custom models with no python dependency apart from pytorch and related libs.
 The example taken here uses scripted mode model however you can also deploy eager models.</p>
 <p><strong>Prerequisites</strong></p>
@@ -627,7 +650,7 @@ The example taken here uses scripted mode model however you can also deploy eage
 </ul>
 </section>
 <section id="serve-custom-models-with-third-party-dependency">
-<h3><span class="section-number">18.1.7. </span>Serve custom models with third party dependency<a class="headerlink" href="#serve-custom-models-with-third-party-dependency" title="Permalink to this headline">¶</a></h3>
+<h3>Serve custom models with third party dependency<a class="headerlink" href="#serve-custom-models-with-third-party-dependency" title="Permalink to this heading">¶</a></h3>
 <p>This use case demonstrates torchserve deployment for custom models with python dependency apart from pytorch and related libs.
 The example taken here uses scripted mode model however you can also deploy eager models.</p>
 <p><strong>Prerequisites</strong></p>
@@ -656,7 +679,7 @@ The example taken here uses scripted mode model however you can also deploy eage
 <li><p>Add following parameter to config.properties file - <code class="docutils literal notranslate"><span class="pre">install_py_dep_per_model=true</span></code> . For details refer <a class="reference external" href="https://github.com/pytorch/serve/blob/master/docs/configuration.md#allow-model-specific-custom-python-packages">Allow model specific custom python packages</a> .</p></li>
 <li><p>Start torchserve with following command with config.properties file - <code class="docutils literal notranslate"><span class="pre">torchserve</span> <span class="pre">--start</span> <span class="pre">--ncs</span> <span class="pre">--model-store</span> <span class="pre">&lt;model_store</span> <span class="pre">or</span> <span class="pre">your_model_store_dir&gt;</span> <span class="pre">--ts-config</span> <span class="pre">&lt;your_path&gt;/config.properties</span></code></p>
 <ul class="simple">
-<li><p>Docker - `docker run –rm -p8080:8080 -p8081:8081 -v &lt;local_dir&gt;/model-store:/home/model-server/model-store &lt;your_docker_image&gt; torchserve –model-store=/tmp/models –ts-config &lt;your_path&gt;/config.properties</p></li>
+<li><p>Docker - `docker run –rm -p 127.0.0.1:8080:8080 -p 127.0.0.1:8081:8081 -v &lt;local_dir&gt;/model-store:/home/model-server/model-store &lt;your_docker_image&gt; torchserve –model-store=/tmp/models –ts-config &lt;your_path&gt;/config.properties</p></li>
 </ul>
 </li>
 <li><p>Register model i.e. MAR file created in step 1 above as <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">-v</span> <span class="pre">-X</span> <span class="pre">POST</span> <span class="pre">&quot;http://localhost:8081/models?initial_workers=1&amp;synchronous=true&amp;url=&lt;your</span> <span class="pre">model_name&gt;.mar&quot;</span></code></p></li>
@@ -674,7 +697,7 @@ The example taken here uses scripted mode model however you can also deploy eage
 </ul>
 </section>
 <section id="serve-models-for-ab-testing">
-<h3><span class="section-number">18.1.8. </span>Serve models for AB testing<a class="headerlink" href="#serve-models-for-ab-testing" title="Permalink to this headline">¶</a></h3>
+<h3>Serve models for AB testing<a class="headerlink" href="#serve-models-for-ab-testing" title="Permalink to this heading">¶</a></h3>
 <p>This use case demonstrates serving two or more versions of same model using version API. It is an extension of any of the above use cases.</p>
 <p><strong>Prerequisites</strong></p>
 <ul class="simple">
@@ -721,10 +744,10 @@ OR
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="workflows.html" class="btn btn-neutral float-right" title="19. TorchServe Workflows" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
+        <a href="workflows.html" class="btn btn-neutral float-right" title="TorchServe Workflows" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
       
       
-        <a href="torchserve_on_wsl.html" class="btn btn-neutral" title="17. TorchServe on Windows Subsystem for Linux (WSL)" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+        <a href="torchserve_on_wsl.html" class="btn btn-neutral" title="TorchServe on Windows Subsystem for Linux (WSL)" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
       
     </div>
   
@@ -756,16 +779,16 @@ OR
           <div class="pytorch-right-menu" id="pytorch-right-menu">
             <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
               <ul>
-<li><a class="reference internal" href="#">18. Torchserve Use Cases</a><ul>
-<li><a class="reference internal" href="#use-cases">18.1. Use Cases</a><ul>
-<li><a class="reference internal" href="#deploy-pytorch-eager-mode-model">18.1.1. Deploy pytorch eager mode model</a></li>
-<li><a class="reference internal" href="#deploy-pytorch-scripted-mode-model">18.1.2. Deploy pytorch scripted mode model</a></li>
-<li><a class="reference internal" href="#serve-readymade-models-on-torchserve-model-zoo">18.1.3. Serve readymade models on torchserve model zoo</a></li>
-<li><a class="reference internal" href="#secure-model-serving">18.1.4. Secure model serving</a></li>
-<li><a class="reference internal" href="#serve-models-on-gpus">18.1.5. Serve models on GPUs</a></li>
-<li><a class="reference internal" href="#serve-custom-models-with-no-third-party-dependency">18.1.6. Serve custom models with no third party dependency</a></li>
-<li><a class="reference internal" href="#serve-custom-models-with-third-party-dependency">18.1.7. Serve custom models with third party dependency</a></li>
-<li><a class="reference internal" href="#serve-models-for-ab-testing">18.1.8. Serve models for AB testing</a></li>
+<li><a class="reference internal" href="#">Torchserve Use Cases</a><ul>
+<li><a class="reference internal" href="#use-cases">Use Cases</a><ul>
+<li><a class="reference internal" href="#deploy-pytorch-eager-mode-model">Deploy pytorch eager mode model</a></li>
+<li><a class="reference internal" href="#deploy-pytorch-scripted-mode-model">Deploy pytorch scripted mode model</a></li>
+<li><a class="reference internal" href="#serve-readymade-models-on-torchserve-model-zoo">Serve readymade models on torchserve model zoo</a></li>
+<li><a class="reference internal" href="#secure-model-serving">Secure model serving</a></li>
+<li><a class="reference internal" href="#serve-models-on-gpus">Serve models on GPUs</a></li>
+<li><a class="reference internal" href="#serve-custom-models-with-no-third-party-dependency">Serve custom models with no third party dependency</a></li>
+<li><a class="reference internal" href="#serve-custom-models-with-third-party-dependency">Serve custom models with third party dependency</a></li>
+<li><a class="reference internal" href="#serve-models-for-ab-testing">Serve models for AB testing</a></li>
 </ul>
 </li>
 </ul>
@@ -788,6 +811,7 @@ OR
          <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
          <script src="_static/jquery.js"></script>
          <script src="_static/underscore.js"></script>
+         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
          <script src="_static/doctools.js"></script>
          <script src="_static/katex.min.js"></script>
          <script src="_static/auto-render.min.js"></script>
@@ -893,9 +917,9 @@ OR
         <div class="copyright">
         <p>© Copyright The Linux Foundation. The PyTorch Foundation is a project of The Linux Foundation.
           For web site terms of use, trademark policy and other policies applicable to The PyTorch Foundation please see
-          <a href="www.linuxfoundation.org/policies/">www.linuxfoundation.org/policies/</a>. The PyTorch Foundation supports the PyTorch open source
+          <a href="https://www.linuxfoundation.org/policies/">www.linuxfoundation.org/policies/</a>. The PyTorch Foundation supports the PyTorch open source
           project, which has been established as PyTorch Project a Series of LF Projects, LLC. For policies applicable to the PyTorch Project a Series of LF Projects, LLC,
-          please see <a href="www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.</p>
+          please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.</p>
       </div>
      </div>
 
@@ -934,7 +958,7 @@ OR
           </li>
             
           <li>
-            <a href="https://pytorch.org/mobile">Mobile</a>
+            <a href="">Mobile</a>
           </li>
 
           <li>
