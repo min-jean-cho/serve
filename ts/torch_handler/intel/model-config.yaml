@@ -1,0 +1,5 @@
+minWorkers: 1
+maxWorkers: 1
+
+handler:
+    dtype: "bfloat16"
